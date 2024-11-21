@@ -7,7 +7,6 @@ import { EntityField } from './entityField';
   templateUrl: './create-entity.component.html'
 })
 export class CreateEntityComponent implements OnInit, OnChanges {
-
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
 
@@ -21,6 +20,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() cancelLabel = 'Cancelar';
 
   entityForm: FormGroup;
+  isSaving: boolean = false;  // Agregamos el estado de carga
 
   constructor(private fb: FormBuilder) {
     this.entityForm = this.fb.group({});
@@ -54,13 +54,10 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   private getFieldValidators(field: EntityField): Validators[] {
     const validators: Validators[] = [];
-
     if (field.pattern) {
       validators.push(Validators.pattern(new RegExp(field.pattern)));
     }
-
     this.addFieldSpecificValidators(field, validators);
-
     return validators;
   }
 
@@ -105,9 +102,14 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   save(): void {
     if (this.validateForm()) {
+      this.isSaving = true; // Activar el spinner
       this.processAuthorField();
-      this.saveItem.emit(this.entityForm.value);
-      this.close(); // Close the modal after saving
+      // Simula un retraso para la operación de guardado (puedes reemplazar esto con tu lógica real)
+      setTimeout(() => {
+        this.saveItem.emit(this.entityForm.value);
+        this.isSaving = false;  // Desactivar el spinner
+        this.close();  // Cierra el modal después de guardar
+      }, 2000); // Simula una espera de 2 segundos
     } else {
       this.markAllFieldsAsTouched(); // Show errors if the form is invalid
     }
