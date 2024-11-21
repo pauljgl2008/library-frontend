@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <!-- Usar el componente reutilizable para crear una entidad -->
+  <app-create-entity [(visible)]="visible" [entityFields]="[
+   { field: 'title', label: 'Título', type: 'text' },
+   { field: 'author', label: 'Autor', type: 'text' },
+   { field: 'isbn', label: 'ISBN', type: 'text' },
+   { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }
+ ]" [entity]="newItem" (cancel)="onCancelCreate()">
+  </app-create-entity>
+  <!-- Filtro de búsqueda -->
+  <input type="text" class="form-control form-control-lg mb-4" placeholder="Filtrar" [(ngModel)]="filterText"
+    (ngModelChange)="onFilterChange()">
+
+  <!-- Tabla de Datos -->
+  <div class="table-responsive" style="max-height: calc(100vh - 250px); overflow-y: auto;">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th *ngFor="let col of columns" [style.width]="col.field === 'actions' ? '150px' : 'auto'">{{ col.header }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of paginatedData">
+          <td *ngFor="let col of columns" [style.width]="col.field === 'actions' ? '150px' : 'auto'">
+            <ng-container *ngIf="col.field === 'actions'; else displayValue">
+              <button class="btn btn-outline-warning btn-sm" (click)="onEdit(item)">Editar</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="onDelete(item)">Eliminar</button>
+            </ng-container>
+            <ng-template #displayValue>{{ item[col.field] }}</ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="d-flex justify-content-between">
+    <div>
+      <label for="pageSize" class="mb-0 me-2">Filas por página:</label>
+      <select id="pageSize" class="form-select form-select-sm" [(ngModel)]="pageSize"
+        (change)="onPageSizeChange(pageSize)">
+        <option *ngFor="let size of [5, 10, 15]" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+    <div class="d-flex align-items-center">
+      <button class="btn btn-outline-primary btn-sm me-2" (click)="onPageChange(pageIndex - 1)"
+        [disabled]="pageIndex <= 0"><i class="bi bi-chevron-left"></i> Anterior</button>
+      <span> Página {{ pageIndex + 1 }} de {{ totalPages }} </span>
+      <button class="btn btn-outline-primary btn-sm ms-2" (click)="onPageChange(pageIndex + 1)"
+        [disabled]="pageIndex >= totalPages - 1">Siguiente <i class="bi bi-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación de Eliminación -->
+<app-delete-entity [visible]="displayDeleteModal" [itemToDelete]="itemToDelete"
+  (confirmDeletion)="onConfirmDeletion($event)"></app-delete-entity>

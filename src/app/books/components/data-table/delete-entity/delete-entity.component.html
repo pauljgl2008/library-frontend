@@ -1,0 +1,25 @@
+<p-dialog header="Eliminar registro" [(visible)]="visible" [modal]="true" [closable]="false" [responsive]="true"
+  [style]="{ width: '400px' }">
+
+  <div *ngIf="itemToDelete" class="modal-body">
+    ¿Desea eliminar el registro <strong>{{ itemToDelete.title }}</strong> con ID <strong>{{ itemToDelete.id }}</strong>?
+  </div>
+
+  <p-footer>
+    <!-- Usar Flexbox para mejorar el layout de los botones en pantallas pequeñas -->
+    <div class="d-flex justify-content-between w-100" style="flex-wrap: wrap; gap: 10px;">
+
+      <!-- Botón No -->
+      <button type="button" pButton label="No" icon="pi pi-times" (click)="onCancel()"
+        class="p-button-danger p-button-raised p-button-rounded p-button-sm w-auto"
+        style="flex: 1 1 48%; max-width: 180px;">
+      </button>
+
+      <!-- Botón Sí -->
+      <button type="button" pButton label="Sí" icon="pi pi-check"
+        class="p-button-success p-button-raised p-button-rounded p-button-sm w-auto" (click)="onConfirm()"
+        style="flex: 1 1 48%; max-width: 180px;">
+      </button>
+    </div>
+  </p-footer>
+</p-dialog>

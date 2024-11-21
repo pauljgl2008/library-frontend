@@ -1,0 +1,110 @@
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+
+@Component({
+  selector: 'app-data-table',
+  templateUrl: './data-table.component.html',
+})
+export class DataTableComponent implements OnInit, OnChanges {
+
+  @Input() data: any[] = [];
+  @Input() columns: any[] = [];
+  @Input() pageSize: number = 5;
+  @Input() pageIndex: number = 0;
+  @Input() totalPages: number = 1;
+  @Input() filterText: string = '';
+  @Output() pageChange = new EventEmitter<number>();
+  @Output() pageSizeChange = new EventEmitter<number>();
+  @Output() filterChange = new EventEmitter<string>();
+
+  @Output() create = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();  // Cambiar para emitir el objeto completo
+
+  paginatedData: any[] = [];
+  displayDeleteModal: boolean = false;
+  itemToDelete: any = null;
+  // Propiedades para el modal o formulario de creación
+  visible: boolean = false;
+  newItem: any = {};
+
+  ngOnInit(): void {
+    this.updatePaginationAndFilter();
+  }
+
+  // Función para cerrar el modal de creación sin guardar
+  onCancelCreate() {
+    this.visible = false;
+  }
+
+  // Función que abre el modal de creación
+  onCreate() {
+    this.newItem = {}; // Resetea los datos del libro
+    this.visible = true; // Muestra el modal
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] || changes['filterText'] || changes['pageSize'] || changes['pageIndex']) {
+      this.updatePaginationAndFilter();
+    }
+  }
+
+  private updatePaginationAndFilter(): void {
+    const filteredData = this.filterData();
+    this.applyPagination(filteredData);
+  }
+
+  private filterData(): any[] {
+    if (!this.filterText) {
+      return this.data;
+    }
+    const filterTextLower = this.filterText.toLowerCase();
+    return this.data.filter(item =>
+      this.columns.some(col =>
+        item[col.field]?.toString().toLowerCase().includes(filterTextLower)
+      )
+    );
+  }
+
+  private applyPagination(filteredData: any[]): void {
+    this.paginatedData = filteredData;
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.pageIndex = page;
+      this.pageChange.emit(page);
+      this.updatePaginationAndFilter();
+    }
+  }
+
+  onPageSizeChange(size: number): void {
+    this.pageIndex = 0;
+    this.pageSize = size;
+    this.pageSizeChange.emit(size);
+    this.pageChange.emit(this.pageIndex);
+    this.updatePaginationAndFilter();
+  }
+
+  onFilterChange(): void {
+    this.pageIndex = 0;
+    this.filterChange.emit(this.filterText);
+    this.updatePaginationAndFilter();
+  }
+
+  onEdit(item: number): void {
+    this.edit.emit(item);
+  }
+
+  onDelete(item: any): void {
+    this.itemToDelete = item;
+    this.displayDeleteModal = true;
+  }
+
+  onConfirmDeletion(isConfirmed: boolean): void {
+    if (isConfirmed && this.itemToDelete) {
+      console.log('Eliminando el item:', this.itemToDelete);
+      this.delete.emit(this.itemToDelete);
+    }
+    this.displayDeleteModal = false;
+  }
+}

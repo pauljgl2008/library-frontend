@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-end mb-4">
+  <button class="btn btn-outline-success btn-lg" (click)="onCreate()">Crear Libro</button>
+</div>
+
+<!-- Modal de Creación de Libro -->
+<app-create-entity [(visible)]="visible" [entityFields]="[
+    { field: 'title', label: 'Título', type: 'text' },
+    { field: 'author', label: 'Autor', type: 'select' },
+    { field: 'isbn', label: 'ISBN', type: 'text' },
+    { field: 'status', label: 'Estado', type: 'select' },
+    { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }
+  ]" [entity]="newBook" [authorOptions]="authors" (saveItem)="onSaveItem($event)" (cancel)="onCancelCreate()">
+</app-create-entity>
+
+<!-- DataTable -->
+<app-data-table [data]="data" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
+  [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)" (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>
