@@ -18,11 +18,23 @@
       <tbody>
         <tr *ngFor="let item of paginatedData">
           <td *ngFor="let col of columns" [style.width]="col.field === 'actions' ? '150px' : 'auto'">
+            <!-- Si la columna es 'actions', mostrar los botones de editar y eliminar -->
             <ng-container *ngIf="col.field === 'actions'; else displayValue">
               <button class="btn btn-outline-warning btn-sm" (click)="onEdit(item)">Editar</button>
               <button class="btn btn-outline-danger btn-sm" (click)="onDelete(item)">Eliminar</button>
             </ng-container>
-            <ng-template #displayValue>{{ item[col.field] }}</ng-template>
+
+            <!-- Mostrar el valor de la columna o el nombre del autor si está presente -->
+            <ng-template #displayValue>
+              <!-- Primero, verificamos si 'author' existe y, si es así, mostramos el nombre -->
+              <ng-container *ngIf="col.field === 'author' && item['author']; else showColumnValue">
+                {{ item['author']?.['name'] }}
+              </ng-container>
+              <!-- Si no es 'author', mostramos el valor de la columna correspondiente -->
+              <ng-template #showColumnValue>
+                {{ item[col.field] }}
+              </ng-template>
+            </ng-template>
           </td>
         </tr>
       </tbody>

@@ -115,19 +115,13 @@ export class EditEntityComponent {
     return null;
   }
 
-  onConfirm(): void {
-    this.confirmEdition.emit(true);
-  }
-
-  onCancel(): void {
-    this.confirmEdition.emit(false);
-  }
   cancel(): void {
     if (this.entityForm.invalid) {
       this.markAllFieldsAsTouched();
     }
     this.visible = false;
     this.visibleChange.emit(this.visible);
+    this.confirmEdition.emit(false);
     this.resetForm();
   }
 
@@ -158,6 +152,7 @@ export class EditEntityComponent {
       this.processAuthorField();
       setTimeout(() => {
         this.saveItem.emit(this.entityForm.value);
+        this.confirmEdition.emit(true);
         this.isSaving = false;
         this.close();
       }, 2000);
