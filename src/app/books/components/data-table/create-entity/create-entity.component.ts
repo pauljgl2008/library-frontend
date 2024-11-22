@@ -47,13 +47,13 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
     this.entityFields.forEach(field => {
       const fieldValidators = [
-        Validators.required, 
-        this.notEmptyValidator, 
+        Validators.required,
+        this.notEmptyValidator,
         ...this.getFieldValidators(field)
       ];
 
       if (field.field === 'isbn') {
-        fieldValidators.push(Validators.maxLength(13));
+        fieldValidators.push(Validators.maxLength(14));
       }
 
       let defaultValue = this.entity[field.field] || null;
@@ -62,7 +62,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
       }
 
       formGroup[field.field] = [
-        defaultValue, 
+        defaultValue,
         fieldValidators
       ];
     });
@@ -86,8 +86,8 @@ export class CreateEntityComponent implements OnInit, OnChanges {
         break;
       case 'text':
         if (field.field === 'isbn') {
-          validators.push(Validators.pattern(/^\d{13}$/));
-          validators.push(Validators.maxLength(13));
+          validators.push(Validators.pattern(/^\d{3}-\d{10}$/));
+          validators.push(Validators.maxLength(14));
         }
         break;
     }

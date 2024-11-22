@@ -7,7 +7,7 @@
       <!-- Condición para mostrar un input o un select -->
       <ng-container *ngIf="field.type !== 'select'; else selectField">
         <input id="{{ field.field }}" formControlName="{{ field.field }}" [type]="field.type" class="form-control mb-3"
-          [placeholder]="'Ingresa ' + field.label" [attr.maxlength]="field.field === 'isbn' ? 13 : null"
+          [placeholder]="'Ingresa ' + field.label" [attr.maxlength]="field.field === 'isbn' ? 14 : null"
           [attr.aria-describedby]="field.field + '-error'" />
       </ng-container>
 
@@ -36,7 +36,7 @@
           Formato no válido.
         </small>
         <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('maxlength')">
-          El campo no puede tener más de 13 caracteres.
+          El campo no puede tener más de 14 caracteres.
         </small>
       </div>
     </div>

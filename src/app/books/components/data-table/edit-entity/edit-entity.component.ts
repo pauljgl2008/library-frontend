@@ -95,8 +95,8 @@ export class EditEntityComponent {
         break;
       case 'text':
         if (field.field === 'isbn') {
-          validators.push(Validators.pattern(/^\d{13}$/));
-          validators.push(Validators.maxLength(13));
+          validators.push(Validators.pattern(/^\d{3}-\d{10}$/));
+          validators.push(Validators.maxLength(14));
         }
         break;
     }
