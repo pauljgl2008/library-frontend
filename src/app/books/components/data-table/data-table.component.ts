@@ -106,6 +106,8 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   onEdit(item: any): void {
+    console.log("onEdit")
+    console.log(item)
     this.itemToEdit = item;
     this.displayEditModal = true;
   }
@@ -123,6 +125,7 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.displayDeleteModal = false;
   }
   onConfirmEdition(isConfirmed: boolean): void {
+    console.log("onConfirmEdition")
     if (isConfirmed && this.itemToEdit) {
       console.log('Editando el item:', this.itemToEdit);
       this.edit.emit(this.itemToEdit);

@@ -9,6 +9,8 @@
 <!-- DataTable -->
 <app-data-table [data]="books" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
   [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
-  (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)" (edit)="onEdit($event)"
+  (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)"
+  [entityFields]="entityFields"
+  (edit)="onEdit($event)"
   (delete)="onDelete($event)">
 </app-data-table>

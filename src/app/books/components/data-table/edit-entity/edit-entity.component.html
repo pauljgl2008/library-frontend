@@ -22,4 +22,62 @@
       </button>
     </div>
   </p-footer>
+
+  <h3 class="text-center">{{ formTitle }}</h3>
+
+    <form [formGroup]="entityForm" (ngSubmit)="save()">
+      <div *ngFor="let field of entityFields">
+        <label for="{{ field.field }}">{{ field.label }}</label>
+
+        <!-- Condición para mostrar un input o un select -->
+        <ng-container *ngIf="field.type !== 'select'; else selectField">
+          <input
+            id="{{ field.field }}"
+            formControlName="{{ field.field }}"
+            [type]="field.type"
+            class="form-control mb-3"
+            [placeholder]="'Ingresa ' + field.label"
+            [attr.maxlength]="field.field === 'isbn' ? 13 : null"
+            [attr.aria-describedby]="field.field + '-error'"
+          />
+        </ng-container>
+
+        <!-- Dropdown para el campo 'author' o 'status' -->
+        <ng-template #selectField>
+          <select id="{{ field.field }}" formControlName="{{ field.field }}" class="form-control mb-3">
+            <ng-container *ngIf="field.field === 'status'">
+              <option value="Disponible">Disponible</option>
+              <option value="No disponible">No disponible</option>
+            </ng-container>
+
+            <ng-container *ngIf="field.field === 'author'">
+              <option *ngFor="let option of authorOptions" [value]="option.id">
+                {{ option.name }}
+              </option>
+            </ng-container>
+          </select>
+        </ng-template>
+
+        <!-- Mensajes de error -->
+        <div *ngIf="entityForm.get(field.field)?.touched && entityForm.get(field.field)?.invalid">
+          <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('required')">
+            Este campo es obligatorio.
+          </small>
+          <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('pattern')">
+            Formato no válido.
+          </small>
+          <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('maxlength')">
+            El campo no puede tener más de 13 caracteres.
+          </small>
+        </div>
+      </div>
+
+      <p-footer>
+        <div class="d-flex justify-content-between align-items-center w-100" style="gap: 10px; padding: 0 20px;">
+          <p-button [label]="cancelLabel" severity="danger" type="button" (click)="cancel()" icon="pi pi-times" />
+          <p-button severity="success" [label]="submitLabel" type="submit" icon="pi pi-check"
+            [disabled]="entityForm.invalid || isSaving" [loading]="isSaving" />
+        </div>
+      </p-footer>
+    </form>
 </p-dialog>
