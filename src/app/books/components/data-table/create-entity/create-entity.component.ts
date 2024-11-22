@@ -8,16 +8,17 @@ import { EntityField } from './entityField';
 })
 export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() visible = false;
-  @Output() visibleChange = new EventEmitter<boolean>();
 
   @Input() entity: { [key: string]: any } = {};
   @Input() entityFields: EntityField[] = [];
   @Input() authorOptions: { id: number, name: string }[] = [];
-  @Output() saveItem = new EventEmitter<{ [key: string]: any }>();
 
   @Input() formTitle = 'Crear registro';
   @Input() submitLabel = 'Guardar';
   @Input() cancelLabel = 'Cancelar';
+
+  @Output() saveItem = new EventEmitter<{ [key: string]: any }>();
+  @Output() visibleChange = new EventEmitter<boolean>();
 
   entityForm: FormGroup;
   isSaving: boolean = false;
@@ -37,14 +38,13 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
     if (changes['entity'] && !changes['entity'].firstChange) {
       this.resetForm();
-      this.updateDateFields();  // Asegura que las fechas se actualicen si es necesario
+      this.updateDateFields();
     }
   }
 
   private buildForm(): void {
     const formGroup: { [key: string]: any } = {};
 
-    // Recorremos los campos y agregamos los controles en el FormGroup
     this.entityFields.forEach(field => {
       const fieldValidators = [
         Validators.required, 
@@ -52,15 +52,12 @@ export class CreateEntityComponent implements OnInit, OnChanges {
         ...this.getFieldValidators(field)
       ];
 
-      // Validación de longitud máxima para el campo 'isbn'
       if (field.field === 'isbn') {
-        fieldValidators.push(Validators.maxLength(13));  // Validación de 13 caracteres
+        fieldValidators.push(Validators.maxLength(13));
       }
 
-      // Establecer valor por defecto para campos de tipo 'date'
       let defaultValue = this.entity[field.field] || null;
       if (field.type === 'date' && !defaultValue) {
-        // Si no hay valor inicial, asignar la fecha actual en formato 'yyyy-MM-dd'
         defaultValue = new Date().toISOString().split('T')[0];
       }
 
@@ -85,13 +82,12 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   private addFieldSpecificValidators(field: EntityField, validators: Validators[]): void {
     switch (field.type) {
       case 'date':
-        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));  // Formato de fecha 'yyyy-MM-dd'
+        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));
         break;
       case 'text':
         if (field.field === 'isbn') {
-          // Validación de 13 caracteres numéricos para ISBN
-          validators.push(Validators.pattern(/^\d{13}$/));  // Solo 13 dígitos numéricos
-          validators.push(Validators.maxLength(13));         // No más de 13 caracteres
+          validators.push(Validators.pattern(/^\d{13}$/));
+          validators.push(Validators.maxLength(13));
         }
         break;
     }
@@ -128,11 +124,11 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   close(): void {
     if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched();  // Mostrar errores si el formulario es inválido
+      this.markAllFieldsAsTouched();
     }
     this.visible = false;
-    this.visibleChange.emit(this.visible);  // Cerrar el modal
-    this.resetForm();  // Restablecer el formulario
+    this.visibleChange.emit(this.visible);
+    this.resetForm();
   }
 
   save(): void {
@@ -142,26 +138,26 @@ export class CreateEntityComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.saveItem.emit(this.entityForm.value);
         this.isSaving = false;
-        this.close();  // Cerrar el modal después de guardar
+        this.close();
       }, 2000);
     } else {
-      this.markAllFieldsAsTouched();  // Mostrar errores si el formulario es inválido
+      this.markAllFieldsAsTouched();
     }
   }
 
   cancel(): void {
     if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched();  // Mostrar errores si el formulario es inválido
+      this.markAllFieldsAsTouched();
     }
     this.visible = false;
-    this.visibleChange.emit(this.visible);  // Cerrar el modal
-    this.resetForm();  // Restablecer el formulario
+    this.visibleChange.emit(this.visible);
+    this.resetForm();
   }
 
   private processAuthorField(): void {
     const author = this.entityForm.value['author'];
     if (author) {
-      this.entityForm.value['author'] = Number(author);  // Convertir autor a número si está presente
+      this.entityForm.value['author'] = Number(author);
     }
   }
 
