@@ -6,8 +6,7 @@ import { EntityField } from '../../components/data-table/create-entity/entityFie
 
 @Component({
   selector: 'app-list-page',
-  templateUrl: './list-page.component.html',
-  styles: []
+  templateUrl: './list-page.component.html'
 })
 export class ListPageComponent implements OnInit {
 
