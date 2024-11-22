@@ -4,5 +4,5 @@ export interface EntityField {
   type: 'text' | 'date' | 'select';
   required?: boolean;
   pattern?: string;
-  options?: { id: number; name: string; }[]; // Options for select fields like authors
+  options?: { id: number; name: string; }[];
 }

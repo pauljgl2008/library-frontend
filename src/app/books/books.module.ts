@@ -30,9 +30,9 @@ import { CreateEntityComponent } from './components/data-table/create-entity/cre
     BooksRoutingModule,
     PanelMenuModule,
     ToolbarModule,
-    ButtonModule,  // Módulo para usar botones
-    DialogModule,  // Módulo para usar diálogos (modales)
-    ToastModule    // Módulo para usar notificaciones (opcional)
+    ButtonModule,
+    DialogModule,
+    ToastModule
   ]
 })
 export class BooksModule { }

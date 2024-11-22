@@ -20,7 +20,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() cancelLabel = 'Cancelar';
 
   entityForm: FormGroup;
-  isSaving: boolean = false;  // Agregamos el estado de carga
+  isSaving: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.entityForm = this.fb.group({});
@@ -93,35 +93,34 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   close(): void {
     if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched(); // Show errors if the form is invalid
+      this.markAllFieldsAsTouched();
     }
     this.visible = false;
-    this.visibleChange.emit(this.visible); // Close the modal
-    this.resetForm(); // Optionally reset the form (you can remove this if not needed)
+    this.visibleChange.emit(this.visible);
+    this.resetForm();
   }
 
   save(): void {
     if (this.validateForm()) {
-      this.isSaving = true; // Activar el spinner
+      this.isSaving = true;
       this.processAuthorField();
-      // Simula un retraso para la operación de guardado (puedes reemplazar esto con tu lógica real)
       setTimeout(() => {
         this.saveItem.emit(this.entityForm.value);
-        this.isSaving = false;  // Desactivar el spinner
-        this.close();  // Cierra el modal después de guardar
-      }, 2000); // Simula una espera de 2 segundos
+        this.isSaving = false;
+        this.close();
+      }, 2000);
     } else {
-      this.markAllFieldsAsTouched(); // Show errors if the form is invalid
+      this.markAllFieldsAsTouched();
     }
   }
 
   cancel(): void {
     if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched(); // Show validation errors if the form is invalid
+      this.markAllFieldsAsTouched();
     }
     this.visible = false;
-    this.visibleChange.emit(this.visible); // Close the modal
-    this.resetForm(); // Reset the form
+    this.visibleChange.emit(this.visible);
+    this.resetForm();
   }
 
   private processAuthorField(): void {
@@ -135,7 +134,6 @@ export class CreateEntityComponent implements OnInit, OnChanges {
     return this.entityForm.get(field);
   }
 
-  // Custom validator to check for empty strings or null values
   private notEmptyValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value === null || control.value === '') {
       return { 'notEmpty': true };

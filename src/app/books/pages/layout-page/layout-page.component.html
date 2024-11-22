@@ -1,5 +1,4 @@
 <div class="d-flex" style="height: 100vh;">
-  <!-- Sidebar (Sidenav) -->
   <div class="bg-dark text-white p-3 d-none d-md-block" style="width: 250px;" id="sidebar">
     <h4 class="mb-4">Menú</h4>
     <ul class="nav flex-column">
@@ -12,9 +11,7 @@
     </ul>
   </div>
 
-  <!-- Main content area -->
   <div class="flex-grow-1">
-    <!-- Navbar (Top Toolbar) -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <button class="btn btn-light d-md-none" (click)="toggleSidebar()">
         <i class="bi bi-list"></i>
@@ -22,7 +19,6 @@
       <span class="navbar-brand ms-3">Dashboard</span>
     </nav>
 
-    <!-- Main content -->
     <router-outlet></router-outlet>
   </div>
 </div>

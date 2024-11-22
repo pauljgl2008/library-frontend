@@ -18,12 +18,11 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   @Output() create = new EventEmitter<any>();
   @Output() edit = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<any>();  // Cambiar para emitir el objeto completo
+  @Output() delete = new EventEmitter<any>();
 
   paginatedData: any[] = [];
   displayDeleteModal: boolean = false;
   itemToDelete: any = null;
-  // Propiedades para el modal o formulario de creación
   visible: boolean = false;
   newItem: any = {};
 
@@ -31,15 +30,13 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.updatePaginationAndFilter();
   }
 
-  // Función para cerrar el modal de creación sin guardar
   onCancelCreate() {
     this.visible = false;
   }
 
-  // Función que abre el modal de creación
   onCreate() {
-    this.newItem = {}; // Resetea los datos del libro
-    this.visible = true; // Muestra el modal
+    this.newItem = {};
+    this.visible = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

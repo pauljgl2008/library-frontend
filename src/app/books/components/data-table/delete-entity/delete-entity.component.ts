@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DeleteEntityComponent {
 
   @Input() visible: boolean = false;
-  @Input() itemToDelete: any = null;  // Recibimos el libro completo
+  @Input() itemToDelete: any = null;
   @Output() confirmDeletion = new EventEmitter<boolean>();
 
   constructor() { }

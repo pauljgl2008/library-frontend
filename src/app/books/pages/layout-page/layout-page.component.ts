@@ -7,7 +7,6 @@ import { Component } from "@angular/core";
 })
 export class LayoutPageComponent {
 
-  // Sidebar items with label, icon, and URL
   public sidebarItems = [
     { label: 'Dashboard', icon: 'bi bi-house-door', url: './list' },
     { label: 'Libros', icon: 'bi bi-book', url: './list' },
@@ -17,8 +16,6 @@ export class LayoutPageComponent {
     { label: 'Buscar', icon: 'bi bi-search', url: './search' },
   ];
   
-
-  // Method to toggle the sidebar visibility
   toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     if (sidebar) {
@@ -28,5 +25,4 @@ export class LayoutPageComponent {
     }
   }
 
-  // Removed the closeSidebar() method from here
 }

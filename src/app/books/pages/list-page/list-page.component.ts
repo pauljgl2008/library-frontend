@@ -27,20 +27,20 @@ export class ListPageComponent implements OnInit {
     { header: 'Fecha de publicación', field: 'publication_date' },
     { header: 'Acciones', field: 'actions' },
   ];
-  authors: any[] = [];  // Agregar los autores aquí
+  authors: any[] = [];
 
   newBook: any = {
     title: null,
     author: null,
     isbn: null,
     publication_date: null,
-    status: 'Disponible'  // Valor por defecto, puede ser "Disponible" o "No disponible"
+    status: 'Disponible'
   };
   constructor(private bookService: BookService, private authorSerivce: AuthorService) { }
 
   ngOnInit(): void {
     this.loadBooks();
-    this.loadAuthors();  // Cargar los autores cuando la página se inicia
+    this.loadAuthors();
   }
   loadAuthors(): void {
     this.authorSerivce.getAuthors()
@@ -103,21 +103,20 @@ export class ListPageComponent implements OnInit {
       author: null,
       isbn: null,
       publication_date: null,
-      status: 'Disponible' // Valor por defecto
+      status: 'Disponible'
     };
     this.visible = true;
   }
 
-  // Recibir el libro guardado desde el componente hijo
   onSaveItem(item: any): void {
     this.bookService.addBook(item).subscribe((response) => {
       console.log('Libro creado:', response);
       this.loadBooks();
-      this.visible = false; // Cerrar el modal
+      this.visible = false;
     });
   }
 
   onCancelCreate(): void {
-    this.visible = false;  // Cerrar el modal sin guardar
+    this.visible = false;
   }
 }

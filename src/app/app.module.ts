@@ -7,12 +7,10 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 
-// Importa los módulos de PrimeNG que vayas a usar
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { ToastModule } from 'primeng/toast';  // Si vas a usar notificaciones (opcional)
+import { ToastModule } from 'primeng/toast';
 
-// Si necesitas Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -30,7 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ButtonModule,
     ToastModule,
     FormsModule
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
