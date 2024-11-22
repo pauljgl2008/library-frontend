@@ -34,14 +34,16 @@ export class CreateEntityComponent implements OnInit, OnChanges {
     if (changes['entityFields'] && !changes['entityFields'].firstChange) {
       this.buildForm();
     }
+
     if (changes['entity'] && !changes['entity'].firstChange) {
       this.resetForm();
+      this.updateDateFields();  // Asegura que las fechas se actualicen si es necesario
     }
   }
 
   private buildForm(): void {
     const formGroup: { [key: string]: any } = {};
-  
+
     // Recorremos los campos y agregamos los controles en el FormGroup
     this.entityFields.forEach(field => {
       const fieldValidators = [
@@ -49,21 +51,27 @@ export class CreateEntityComponent implements OnInit, OnChanges {
         this.notEmptyValidator, 
         ...this.getFieldValidators(field)
       ];
-  
+
       // Validación de longitud máxima para el campo 'isbn'
       if (field.field === 'isbn') {
         fieldValidators.push(Validators.maxLength(13));  // Validación de 13 caracteres
       }
-  
+
+      // Establecer valor por defecto para campos de tipo 'date'
+      let defaultValue = this.entity[field.field] || null;
+      if (field.type === 'date' && !defaultValue) {
+        // Si no hay valor inicial, asignar la fecha actual en formato 'yyyy-MM-dd'
+        defaultValue = new Date().toISOString().split('T')[0];
+      }
+
       formGroup[field.field] = [
-        this.entity[field.field] || null, 
+        defaultValue, 
         fieldValidators
       ];
     });
-  
+
     this.entityForm = this.fb.group(formGroup);
   }
-  
 
   private getFieldValidators(field: EntityField): Validators[] {
     const validators: Validators[] = [];
@@ -77,7 +85,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   private addFieldSpecificValidators(field: EntityField, validators: Validators[]): void {
     switch (field.type) {
       case 'date':
-        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));
+        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));  // Formato de fecha 'yyyy-MM-dd'
         break;
       case 'text':
         if (field.field === 'isbn') {
@@ -88,10 +96,21 @@ export class CreateEntityComponent implements OnInit, OnChanges {
         break;
     }
   }
-  
 
   private resetForm(): void {
     this.entityForm.reset(this.entity);
+  }
+
+  private updateDateFields(): void {
+    this.entityFields.forEach(field => {
+      if (field.type === 'date') {
+        const control = this.entityForm.get(field.field);
+        if (control && !control.value) {
+          // Si el campo de fecha no tiene valor, asignamos la fecha actual
+          control.setValue(new Date().toISOString().split('T')[0]);
+        }
+      }
+    });
   }
 
   private markAllFieldsAsTouched(): void {
