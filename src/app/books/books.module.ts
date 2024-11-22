@@ -14,10 +14,12 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule  } from 'primeng/toolbar';
 import { PanelMenuModule  } from 'primeng/panelmenu';
 import { CreateEntityComponent } from './components/data-table/create-entity/create-entity.component';
+import { EditEntityComponent } from './components/data-table/edit-entity/edit-entity.component';
 
 @NgModule({
   declarations: [
     CreateEntityComponent,
+    EditEntityComponent,
     DeleteEntityComponent,
     LayoutPageComponent,
     ListPageComponent,

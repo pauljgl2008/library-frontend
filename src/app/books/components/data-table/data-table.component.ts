@@ -1,19 +1,26 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { EntityField } from "./create-entity/entityField";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { EntityField } from './create-entity/entityField';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
 })
 export class DataTableComponent implements OnInit, OnChanges {
-
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
   @Input() pageSize: number = 5;
   @Input() pageIndex: number = 0;
   @Input() totalPages: number = 1;
   @Input() filterText: string = '';
-  @Input() entityFields: EntityField[]=[];
+  @Input() entityFields: EntityField[] = [];
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
@@ -24,7 +31,9 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Output() delete = new EventEmitter<any>();
 
   paginatedData: any[] = [];
+  displayEditModal: boolean = false;
   displayDeleteModal: boolean = false;
+  itemToEdit: any = null;
   itemToDelete: any = null;
   visible: boolean = false;
   newItem: any = {};
@@ -43,7 +52,12 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] || changes['filterText'] || changes['pageSize'] || changes['pageIndex']) {
+    if (
+      changes['data'] ||
+      changes['filterText'] ||
+      changes['pageSize'] ||
+      changes['pageIndex']
+    ) {
       this.updatePaginationAndFilter();
     }
   }
@@ -58,8 +72,8 @@ export class DataTableComponent implements OnInit, OnChanges {
       return this.data;
     }
     const filterTextLower = this.filterText.toLowerCase();
-    return this.data.filter(item =>
-      this.columns.some(col =>
+    return this.data.filter((item) =>
+      this.columns.some((col) =>
         item[col.field]?.toString().toLowerCase().includes(filterTextLower)
       )
     );
@@ -91,8 +105,9 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.updatePaginationAndFilter();
   }
 
-  onEdit(item: number): void {
-    this.edit.emit(item);
+  onEdit(item: any): void {
+    this.itemToEdit = item;
+    this.displayEditModal = true;
   }
 
   onDelete(item: any): void {
@@ -106,5 +121,12 @@ export class DataTableComponent implements OnInit, OnChanges {
       this.delete.emit(this.itemToDelete);
     }
     this.displayDeleteModal = false;
+  }
+  onConfirmEdition(isConfirmed: boolean): void {
+    if (isConfirmed && this.itemToEdit) {
+      console.log('Editando el item:', this.itemToEdit);
+      this.edit.emit(this.itemToEdit);
+    }
+    this.displayEditModal = false;
   }
 }
