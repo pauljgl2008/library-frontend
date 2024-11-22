@@ -10,53 +10,75 @@ export class EditEntityComponent {
   @Input() visible: boolean = false;
   @Input() itemToEdit: any = null;
   @Output() confirmEdition = new EventEmitter<boolean>();
-  entityForm: FormGroup;
-  entity: { [key: string]: any } = {};
   @Input() entityFields: EntityField[] = [];
-  @Input() formTitle = 'Editar registro';
-  @Input() submitLabel = 'Guardar';
-  @Input() cancelLabel = 'Cancelar';
-  @Input() authorOptions: { id: number, name: string }[] = [];
-  isSaving: boolean = false;
+  @Input() formTitle: string = 'Editar registro';
+  @Input() submitLabel: string = 'Guardar';
+  @Input() cancelLabel: string = 'Cancelar';
+  @Input() authorOptions: { id: number; name: string }[] = [];
+
   @Output() saveItem = new EventEmitter<{ [key: string]: any }>();
   @Output() visibleChange = new EventEmitter<boolean>();
+
+  entityForm: FormGroup;
+  entity: { [key: string]: any } = {};
+  isSaving: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.entityForm = this.fb.group({});
   }
+
   ngOnInit(): void {
-    console.log("hi edit entity");
-    console.log(this.entity);
-    console.log(this.entityFields);
-    this.buildForm();
+    this.initializeForm();
   }
-  private buildForm(): void {
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['entityFields'] && !changes['entityFields'].firstChange) {
+      this.rebuildForm();
+    }
+    if (changes['itemToEdit']) {
+      this.updateEntityFromItem(this.itemToEdit);
+      this.rebuildForm();
+    }
+  }
+
+  private initializeForm(): void {
+    this.rebuildForm();
+  }
+
+  private rebuildForm(): void {
+    this.entityForm = this.fb.group(this.createFormGroup());
+  }
+
+  private createFormGroup(): { [key: string]: any } {
     const formGroup: { [key: string]: any } = {};
 
-    this.entityFields.forEach(field => {
-      const fieldValidators = [
-        Validators.required,
-        this.notEmptyValidator,
-        ...this.getFieldValidators(field)
-      ];
-
-      if (field.field === 'isbn') {
-        fieldValidators.push(Validators.maxLength(13));
-      }
-
-      let defaultValue = this.entity[field.field] || null;
-      if (field.type === 'date' && !defaultValue) {
-        defaultValue = new Date().toISOString().split('T')[0];
-      }
-
-      formGroup[field.field] = [
-        defaultValue,
-        fieldValidators
-      ];
+    this.entityFields.forEach((field) => {
+      formGroup[field.field] = this.createFormControl(field);
     });
 
-    this.entityForm = this.fb.group(formGroup);
+    return formGroup;
   }
+
+  private createFormControl(field: EntityField) {
+    const validators = [
+      Validators.required,
+      this.notEmptyValidator,
+      ...this.getFieldValidators(field),
+    ];
+
+    const defaultValue = this.getDefaultFieldValue(field);
+
+    return [defaultValue, validators];
+  }
+
+  private getDefaultFieldValue(field: EntityField): any {
+    let defaultValue = this.entity[field.field] || null;
+    if (field.type === 'date' && !defaultValue) {
+      defaultValue = new Date().toISOString().split('T')[0]; // Default to today's date
+    }
+    return defaultValue;
+  }
+
   private getFieldValidators(field: EntityField): Validators[] {
     const validators: Validators[] = [];
     if (field.pattern) {
@@ -65,16 +87,11 @@ export class EditEntityComponent {
     this.addFieldSpecificValidators(field, validators);
     return validators;
   }
-  private processAuthorField(): void {
-    const author = this.entityForm.value['author'];
-    if (author) {
-      this.entityForm.value['author'] = Number(author);
-    }
-  }
+
   private addFieldSpecificValidators(field: EntityField, validators: Validators[]): void {
     switch (field.type) {
       case 'date':
-        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));
+        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/)); // Validate date format
         break;
       case 'text':
         if (field.field === 'isbn') {
@@ -84,57 +101,49 @@ export class EditEntityComponent {
         break;
     }
   }
+
+  private processAuthorField(): void {
+    const author = this.entityForm.value['author'];
+    if (author) {
+      this.entityForm.value['author'] = Number(author); // Ensure the author ID is processed correctly
+    }
+  }
+
   private resetForm(): void {
     this.entityForm.reset(this.entity);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['entityFields'] && !changes['entityFields'].firstChange) {
-      console.log("this.entityFields");
-      console.log(this.entityFields);
-      this.buildForm();
-    }
-    if (changes['itemToEdit']) {
-      console.log("itemToEdit ha cambiado:", this.itemToEdit);
-      this.transformItemToEntity(this.itemToEdit);
-      this.buildForm();
-
-    }
-  }
-  transformItemToEntity(item: any): void {
-    // Asignamos las propiedades del itemToEdit al objeto entity
+  private updateEntityFromItem(item: any): void {
     this.entity = { ...item };
-    console.log("transformatiomtoentiy")
-    console.log(this.entity)
-    console.log(this.entityFields)
   }
+
   private notEmptyValidator(control: AbstractControl): ValidationErrors | null {
-    if (control.value === null || control.value === '') {
-      return { 'notEmpty': true };
-    }
-    return null;
+    return control.value === null || control.value === '' ? { notEmpty: true } : null;
   }
 
   cancel(): void {
     if (this.entityForm.invalid) {
       this.markAllFieldsAsTouched();
     }
-    this.visible = false;
-    this.visibleChange.emit(this.visible);
-    this.confirmEdition.emit(false);
-    this.resetForm();
+    this.closeForm();
   }
 
   close(): void {
     if (this.entityForm.invalid) {
       this.markAllFieldsAsTouched();
     }
+    this.closeForm();
+  }
+
+  private closeForm(): void {
     this.visible = false;
     this.visibleChange.emit(this.visible);
     this.resetForm();
+    this.confirmEdition.emit(false);
   }
+
   private markAllFieldsAsTouched(): void {
-    Object.keys(this.entityForm.controls).forEach(field => {
+    Object.keys(this.entityForm.controls).forEach((field) => {
       const control = this.entityForm.get(field);
       if (control) {
         control.markAsTouched();
@@ -149,12 +158,12 @@ export class EditEntityComponent {
   save(): void {
     if (this.validateForm()) {
       this.isSaving = true;
-      this.processAuthorField();
+      this.processAuthorField(); // Process author field before saving
       setTimeout(() => {
         this.saveItem.emit(this.entityForm.value);
         this.confirmEdition.emit(true);
         this.isSaving = false;
-        this.close();
+        this.closeForm();
       }, 2000);
     } else {
       this.markAllFieldsAsTouched();
