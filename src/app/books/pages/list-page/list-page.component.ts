@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { PaginatedBooksResponse } from '../../model/book';
 import { AuthorService } from '../../services/author.service';
-import { Author } from '../../model/author';
+import { EntityField } from '../../components/data-table/create-entity/entityField';
 
 @Component({
   selector: 'app-list-page',
@@ -11,7 +11,7 @@ import { Author } from '../../model/author';
 })
 export class ListPageComponent implements OnInit {
 
-  data: any;
+  books: any;
   pageIndex: number = 0;
   pageSize: number = 5;
   visible: boolean = false;
@@ -27,8 +27,14 @@ export class ListPageComponent implements OnInit {
     { header: 'Fecha de publicación', field: 'publication_date' },
     { header: 'Acciones', field: 'actions' },
   ];
+  entityFields: EntityField[] = [
+    { field: 'title', label: 'Título', type: 'text' },
+    { field: 'author', label: 'Autor', type: 'select' },
+    { field: 'isbn', label: 'ISBN', type: 'text' },
+    { field: 'status', label: 'Estado', type: 'select' },
+    { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }
+  ];
   authors: any[] = [];
-
   newBook: any = {
     title: null,
     author: null,
@@ -36,12 +42,14 @@ export class ListPageComponent implements OnInit {
     publication_date: null,
     status: 'Disponible'
   };
+
   constructor(private bookService: BookService, private authorSerivce: AuthorService) { }
 
   ngOnInit(): void {
     this.loadBooks();
     this.loadAuthors();
   }
+
   loadAuthors(): void {
     this.authorSerivce.getAuthors()
       .subscribe((response: any) => {
@@ -54,12 +62,12 @@ export class ListPageComponent implements OnInit {
   loadBooks(): void {
     this.bookService.getPaginatedBooks(this.pageIndex, this.pageSize)
       .subscribe((books: PaginatedBooksResponse) => {
-        this.data = books.content;
+        this.books = books.content;
         this.pageIndex = books.pageable.pageNumber;
         this.pageSize = books.pageable.pageSize;
         this.totalPages = books.totalPages;
 
-        if (this.data.length === 0 && this.pageIndex > 0) {
+        if (this.books.length === 0 && this.pageIndex > 0) {
           this.pageIndex--;
           this.loadBooks();
         }
@@ -97,6 +105,7 @@ export class ListPageComponent implements OnInit {
       this.loadBooks();
     });
   }
+
   onCreate(): void {
     this.newBook = {
       title: null,

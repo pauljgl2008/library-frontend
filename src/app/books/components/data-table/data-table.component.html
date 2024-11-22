@@ -1,11 +1,6 @@
 <div class="container-fluid">
   <!-- Usar el componente reutilizable para crear una entidad -->
-  <app-create-entity [(visible)]="visible" [entityFields]="[
-   { field: 'title', label: 'Título', type: 'text' },
-   { field: 'author', label: 'Autor', type: 'text' },
-   { field: 'isbn', label: 'ISBN', type: 'text' },
-   { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }
- ]" [entity]="newItem" (cancel)="onCancelCreate()">
+  <app-create-entity [(visible)]="visible" [entityFields]="entityFields" [entity]="newItem" (cancel)="onCancelCreate()">
   </app-create-entity>
   <!-- Filtro de búsqueda -->
   <input type="text" class="form-control form-control-lg mb-4" placeholder="Filtrar" [(ngModel)]="filterText"

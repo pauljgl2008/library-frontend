@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { EntityField } from "./create-entity/entityField";
 
 @Component({
   selector: 'app-data-table',
@@ -12,6 +13,8 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() pageIndex: number = 0;
   @Input() totalPages: number = 1;
   @Input() filterText: string = '';
+  @Input() entityFields: EntityField[]=[];
+
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
   @Output() filterChange = new EventEmitter<string>();
