@@ -1,3 +1,4 @@
+import { Author } from './../../model/author';
 import {
   Component,
   EventEmitter,
@@ -21,6 +22,7 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() totalPages: number = 1;
   @Input() filterText: string = '';
   @Input() entityFields: EntityField[] = [];
+  @Input() authorOptions: { id: number, name: string }[] = [];
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
@@ -109,6 +111,9 @@ export class DataTableComponent implements OnInit, OnChanges {
     console.log("onEdit")
     console.log(item)
     this.itemToEdit = item;
+    this.itemToEdit["author"] = item["author"].id
+    console.log("this.itemToEdit")
+    console.log(this.itemToEdit)
     this.displayEditModal = true;
   }
 

@@ -64,5 +64,6 @@
 <app-delete-entity [visible]="displayDeleteModal" [itemToDelete]="itemToDelete"
   (confirmDeletion)="onConfirmDeletion($event)"></app-delete-entity>
 <!-- Modal de Confirmación de Eliminación -->
-<app-edit-entity [visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit"
+<app-edit-entity [authorOptions]="authorOptions"
+[visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit"
   (confirmEdition)="onConfirmEdition($event)"></app-edit-entity>
