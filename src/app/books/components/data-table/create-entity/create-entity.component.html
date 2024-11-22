@@ -8,14 +8,20 @@
 
         <!-- Condición para mostrar un input o un select -->
         <ng-container *ngIf="field.type !== 'select'; else selectField">
-          <input id="{{ field.field }}" formControlName="{{ field.field }}" [type]="field.type"
-            class="form-control mb-3" [placeholder]="'Ingresa ' + field.label" />
+          <input 
+            id="{{ field.field }}" 
+            formControlName="{{ field.field }}" 
+            [type]="field.type"
+            class="form-control mb-3" 
+            [placeholder]="'Ingresa ' + field.label"
+            [attr.maxlength]="field.field === 'isbn' ? 13 : null"
+            [attr.aria-describedby]="field.field + '-error'"
+          />
         </ng-container>
 
         <!-- Dropdown para el campo 'author' o 'status' -->
         <ng-template #selectField>
           <select id="{{ field.field }}" formControlName="{{ field.field }}" class="form-control mb-3">
-            <!-- Usar ng-container para manejar ambas condiciones -->
             <ng-container *ngIf="field.field === 'status'">
               <option value="Disponible">Disponible</option>
               <option value="No disponible">No disponible</option>
@@ -36,6 +42,9 @@
           </small>
           <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('pattern')">
             Formato no válido.
+          </small>
+          <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('maxlength')">
+            El campo no puede tener más de 13 caracteres.
           </small>
         </div>
       </div>

@@ -41,16 +41,29 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   private buildForm(): void {
     const formGroup: { [key: string]: any } = {};
-
+  
+    // Recorremos los campos y agregamos los controles en el FormGroup
     this.entityFields.forEach(field => {
+      const fieldValidators = [
+        Validators.required, 
+        this.notEmptyValidator, 
+        ...this.getFieldValidators(field)
+      ];
+  
+      // Validación de longitud máxima para el campo 'isbn'
+      if (field.field === 'isbn') {
+        fieldValidators.push(Validators.maxLength(13));  // Validación de 13 caracteres
+      }
+  
       formGroup[field.field] = [
         this.entity[field.field] || null, 
-        [Validators.required, this.notEmptyValidator, ...this.getFieldValidators(field)]
+        fieldValidators
       ];
     });
-
+  
     this.entityForm = this.fb.group(formGroup);
   }
+  
 
   private getFieldValidators(field: EntityField): Validators[] {
     const validators: Validators[] = [];
@@ -68,11 +81,14 @@ export class CreateEntityComponent implements OnInit, OnChanges {
         break;
       case 'text':
         if (field.field === 'isbn') {
-          validators.push(Validators.pattern(/^\d{13}$/));
+          // Validación de 13 caracteres numéricos para ISBN
+          validators.push(Validators.pattern(/^\d{13}$/));  // Solo 13 dígitos numéricos
+          validators.push(Validators.maxLength(13));         // No más de 13 caracteres
         }
         break;
     }
   }
+  
 
   private resetForm(): void {
     this.entityForm.reset(this.entity);
@@ -93,11 +109,11 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   close(): void {
     if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched();
+      this.markAllFieldsAsTouched();  // Mostrar errores si el formulario es inválido
     }
     this.visible = false;
-    this.visibleChange.emit(this.visible);
-    this.resetForm();
+    this.visibleChange.emit(this.visible);  // Cerrar el modal
+    this.resetForm();  // Restablecer el formulario
   }
 
   save(): void {
@@ -107,26 +123,26 @@ export class CreateEntityComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.saveItem.emit(this.entityForm.value);
         this.isSaving = false;
-        this.close();
+        this.close();  // Cerrar el modal después de guardar
       }, 2000);
     } else {
-      this.markAllFieldsAsTouched();
+      this.markAllFieldsAsTouched();  // Mostrar errores si el formulario es inválido
     }
   }
 
   cancel(): void {
     if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched();
+      this.markAllFieldsAsTouched();  // Mostrar errores si el formulario es inválido
     }
     this.visible = false;
-    this.visibleChange.emit(this.visible);
-    this.resetForm();
+    this.visibleChange.emit(this.visible);  // Cerrar el modal
+    this.resetForm();  // Restablecer el formulario
   }
 
   private processAuthorField(): void {
     const author = this.entityForm.value['author'];
     if (author) {
-      this.entityForm.value['author'] = Number(author);
+      this.entityForm.value['author'] = Number(author);  // Convertir autor a número si está presente
     }
   }
 
