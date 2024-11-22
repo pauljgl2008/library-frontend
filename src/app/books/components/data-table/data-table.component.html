@@ -2,6 +2,7 @@
   <!-- Usar el componente reutilizable para crear una entidad -->
   <app-create-entity [(visible)]="visible" [entityFields]="entityFields" [entity]="newItem" (cancel)="onCancelCreate()">
   </app-create-entity>
+
   <!-- Filtro de búsqueda -->
   <input type="text" class="form-control form-control-lg mb-4" placeholder="Filtrar" [(ngModel)]="filterText"
     (ngModelChange)="onFilterChange()">
@@ -26,12 +27,11 @@
 
             <!-- Mostrar el valor de la columna o el nombre del autor si está presente -->
             <ng-template #displayValue>
-              <!-- Primero, verificamos si 'author' existe y, si es así, mostramos el nombre -->
-              <ng-container *ngIf="col.field === 'author' && item['author']; else showColumnValue">
-                {{ item['author']?.['name'] }}
+              <!-- Si el campo es 'author', mostrar el nombre del autor, en caso contrario, mostrar el valor directamente -->
+              <ng-container *ngIf="col.field === 'author'; else normalValue">
+                {{ getAuthorName(item[col.field]) }}
               </ng-container>
-              <!-- Si no es 'author', mostramos el valor de la columna correspondiente -->
-              <ng-template #showColumnValue>
+              <ng-template #normalValue>
                 {{ item[col.field] }}
               </ng-template>
             </ng-template>
@@ -63,6 +63,7 @@
 <!-- Modal de Confirmación de Eliminación -->
 <app-delete-entity [visible]="displayDeleteModal" [itemToDelete]="itemToDelete"
   (confirmDeletion)="onConfirmDeletion($event)"></app-delete-entity>
+
 <!-- Modal de Confirmación de Eliminación -->
 <app-edit-entity [authorOptions]="authorOptions"
 [visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit"

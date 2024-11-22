@@ -22,7 +22,7 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() totalPages: number = 1;
   @Input() filterText: string = '';
   @Input() entityFields: EntityField[] = [];
-  @Input() authorOptions: { id: number, name: string }[] = [];
+  @Input() authorOptions: { id: number; name: string }[] = [];
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
@@ -108,13 +108,15 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   onEdit(item: any): void {
-    console.log("onEdit")
-    console.log(item)
+    console.log('onEdit');
+    console.log(item);
     this.itemToEdit = item;
-    this.itemToEdit["author"] = item["author"].id
-    console.log("this.itemToEdit")
-    console.log(this.itemToEdit)
     this.displayEditModal = true;
+  }
+
+  getAuthorName(authorId: number): string {
+    const author = this.authorOptions.find((option) => option.id === authorId);
+    return author ? author.name : 'Desconocido';
   }
 
   onDelete(item: any): void {
@@ -130,7 +132,6 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.displayDeleteModal = false;
   }
   onConfirmEdition(isConfirmed: boolean): void {
-    console.log("onConfirmEdition")
     if (isConfirmed && this.itemToEdit) {
       console.log('Editando el item:', this.itemToEdit);
       this.edit.emit(this.itemToEdit);
