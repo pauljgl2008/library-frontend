@@ -1,6 +1,6 @@
 import { BookResponseDto } from './book-response-dto';
 
-export interface LoanResponseDto {
+export interface Loan {
   id: number;
   loanDate: string;
   returnDate: string;

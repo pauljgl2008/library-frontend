@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../../services/book.service';
-import { PaginatedBooksResponse } from '../../model/book';
-import { AuthorService } from '../../services/author.service';
 import { EntityField } from '../../model/entityField';
 import { BookResponseDto } from '../../model/book-response-dto';
+import { LoanService } from '../../services/loan.service';
 
 @Component({
   selector: 'app-loans-list-page',
@@ -19,21 +17,19 @@ export class LoansListPageComponent implements OnInit {
   totalPages: number = 1;
   bookIdToDelete: number | null = null;
   columns = [
-    { header: 'Título', field: 'title' },
-    { header: 'Autor', field: 'author' },
-    { header: 'Isbn', field: 'isbn' },
+    { header: 'Fecha de préstamo', field: 'loan_date' },
+    { header: 'Fecha de devolución', field: 'return_date' },
     { header: 'Estado', field: 'status' },
-    { header: 'Fecha de publicación', field: 'publication_date' },
+    { header: 'Libro', field: 'book_id' },
     { header: 'Acciones', field: 'actions' },
   ];
   entityFields: EntityField[] = [
-    { field: 'title', label: 'Título', type: 'text' },
-    { field: 'author', label: 'Autor', type: 'select' },
-    { field: 'isbn', label: 'ISBN', type: 'text' },
+    { field: 'loan_date', label: 'Fecha de préstamo', type: 'date' },
+    { field: 'return_date', label: 'Fecha de devolución', type: 'date' },
     { field: 'status', label: 'Estado', type: 'select' },
-    { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }
+    { field: 'book_id', label: 'Libro', type: 'text' }
   ];
-  authors: any[] = [];
+  loans: any;
   newBook: any = {
     title: null,
     author: null,
@@ -42,52 +38,32 @@ export class LoansListPageComponent implements OnInit {
     status: 'Disponible'
   };
 
-  constructor(private readonly bookService: BookService, private readonly authorSerivce: AuthorService) { }
+  constructor(private readonly loanService: LoanService) { }
 
   ngOnInit(): void {
-    this.loadBooks();
-    this.loadAuthors();
+    this.loadLoans();
   }
 
-  loadAuthors(): void {
-    this.authorSerivce.getAuthors()
+  loadLoans(): void {
+    this.loanService.getLoans()
       .subscribe((response: any) => {
-        this.authors = response
-      });
-  }
-
-  loadBooks(): void {
-    this.bookService.getPaginatedBooks(this.pageIndex, this.pageSize)
-      .subscribe((books: PaginatedBooksResponse) => {
-        this.books = books.content;
-        this.pageIndex = books.pageable.pageNumber;
-        this.pageSize = books.pageable.pageSize;
-        this.totalPages = books.totalPages;
-
-        if (this.books.length === 0 && this.pageIndex > 0) {
-          this.pageIndex--;
-          this.loadBooks();
-        }
-
-        if (this.totalPages === 0) {
-          this.totalPages = 1;
-        }
+        this.loans = response
       });
   }
 
   onPageChange(page: number): void {
     this.pageIndex = page;
-    this.loadBooks();
+    this.loadLoans();
   }
 
   onPageSizeChange(size: number): void {
     this.pageSize = size;
-    this.loadBooks();
+    this.loadLoans();
   }
 
   onFilterChange(filter: string): void {
     this.filterText = filter;
-    this.loadBooks();
+    this.loadLoans();
   }
 
   onEdit(item: any): void {
@@ -95,20 +71,20 @@ export class LoansListPageComponent implements OnInit {
   }
 
   updateBook(item: any) {
-    this.bookService.updateBook(item.id, item).subscribe({
+    this.loanService.updateLoan(item.id, item).subscribe({
       next: (response: BookResponseDto) => {
-        console.log('Libro actualizado:', response);
-        this.loadBooks();
+        console.log('Préstamo actualizado:', response);
+        this.loadLoans();
       },
       error: (error) => {
-        console.error('Error al actualizar el libro:', error);
+        console.error('Error al actualizar el préstamo:', error);
       }
     });
   }
 
   onDelete(item: any): void {
-    this.bookService.deleteBook(item.id).subscribe(() => {
-      this.loadBooks();
+    this.loanService.deleteLoan(item.id).subscribe(() => {
+      this.loadLoans();
     });
   }
 
@@ -124,9 +100,9 @@ export class LoansListPageComponent implements OnInit {
   }
 
   onSaveItem(item: any): void {
-    this.bookService.addBook(item).subscribe((response) => {
+    this.loanService.addLoan(item).subscribe((response) => {
       console.log('Libro creado:', response);
-      this.loadBooks();
+      this.loadLoans();
       this.visible = false;
     });
   }
