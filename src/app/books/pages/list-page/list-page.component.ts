@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { PaginatedBooksResponse } from '../../model/book';
 import { AuthorService } from '../../services/author.service';
-import { EntityField } from '../../components/data-table/create-entity/entityField';
+import { EntityField } from '../../model/entityField';
 import { BookResponseDto } from '../../model/book-response-dto';
 
 @Component({

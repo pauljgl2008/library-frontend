@@ -14,7 +14,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { EntityField } from './entityField';
+import { EntityField } from '../../../model/entityField';
 
 @Component({
   selector: 'app-create-entity',

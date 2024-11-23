@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { EntityField } from '../create-entity/entityField';
+import { EntityField } from '../../../model/entityField';
 
 @Component({
   selector: 'app-edit-entity',

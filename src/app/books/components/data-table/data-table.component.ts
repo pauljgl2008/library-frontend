@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { EntityField } from './create-entity/entityField';
+import { EntityField } from '../../model/entityField';
 
 @Component({
   selector: 'app-data-table',
