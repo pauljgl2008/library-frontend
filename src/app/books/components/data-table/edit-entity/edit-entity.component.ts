@@ -16,8 +16,7 @@ export class EditEntityComponent {
   @Input() cancelLabel: string = 'Cancelar';
   @Input() authorOptions: { id: number; name: string }[] = [];
 
-  @Output() saveItem = new EventEmitter<{ [key: string]: any }>();
-  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() editItem = new EventEmitter<{ [key: string]: any }>();
 
   entityForm: FormGroup;
   entity: { [key: string]: any } = {};
@@ -137,7 +136,6 @@ export class EditEntityComponent {
 
   private closeForm(): void {
     this.visible = false;
-    this.visibleChange.emit(this.visible);
     this.resetForm();
     this.confirmEdition.emit(false);
   }
@@ -155,12 +153,12 @@ export class EditEntityComponent {
     return this.entityForm.valid;
   }
 
-  save(): void {
+  submit(): void {
     if (this.validateForm()) {
       this.isSaving = true;
       this.processAuthorField(); // Process author field before saving
       setTimeout(() => {
-        this.saveItem.emit(this.entityForm.value);
+        this.editItem.emit(this.entityForm.value);
         this.confirmEdition.emit(true);
         this.isSaving = false;
         this.closeForm();

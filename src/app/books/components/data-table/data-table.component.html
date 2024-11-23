@@ -66,5 +66,5 @@
 
 <!-- Modal de Confirmación de Eliminación -->
 <app-edit-entity [authorOptions]="authorOptions"
-[visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit"
+[visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit" (editItem)="onEditItem($event)"
   (confirmEdition)="onConfirmEdition($event)"></app-edit-entity>

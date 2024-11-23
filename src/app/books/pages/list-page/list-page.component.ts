@@ -93,7 +93,7 @@ export class ListPageComponent implements OnInit {
   }
 
   onEdit(item: any): void {
-    console.log("onEdit")
+    console.log("3 onEdit")
     console.log(item)
   }
 
