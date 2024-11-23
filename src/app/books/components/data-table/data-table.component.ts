@@ -108,8 +108,6 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   onEdit(item: any): void {
-    console.log('onEdit DATA TABLE');
-    console.log(item);
     this.itemToEdit = item;
     this.displayEditModal = true;
   }
@@ -126,19 +124,15 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   onConfirmDeletion(isConfirmed: boolean): void {
     if (isConfirmed && this.itemToDelete) {
-      console.log('Eliminando el item:', this.itemToDelete);
       this.delete.emit(this.itemToDelete);
     }
     this.displayDeleteModal = false;
   }
   onEditItem(event: any): void {
-    console.log("1 onEditItem")
-    console.log(event)
     this.itemToEdit = event;
   }
   onConfirmEdition(isConfirmed: boolean): void {
     if (isConfirmed && this.itemToEdit) {
-      console.log('2. Editando el item:', this.itemToEdit);
       this.edit.emit(this.itemToEdit);
     }
     this.displayEditModal = false;

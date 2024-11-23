@@ -158,6 +158,8 @@ export class EditEntityComponent {
       this.isSaving = true;
       this.processAuthorField(); // Process author field before saving
       setTimeout(() => {
+        let x = this.entityForm.value;
+        x["id"]=this.entity["id"]
         this.editItem.emit(this.entityForm.value);
         this.confirmEdition.emit(true);
         this.isSaving = false;

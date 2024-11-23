@@ -3,6 +3,7 @@ import { BookService } from '../../services/book.service';
 import { PaginatedBooksResponse } from '../../model/book';
 import { AuthorService } from '../../services/author.service';
 import { EntityField } from '../../components/data-table/create-entity/entityField';
+import { BookResponseDto } from '../../model/book-response-dto';
 
 @Component({
   selector: 'app-list-page',
@@ -17,7 +18,6 @@ export class ListPageComponent implements OnInit {
   filterText: string = '';
   totalPages: number = 1;
   bookIdToDelete: number | null = null;
-
   columns = [
     { header: 'Título', field: 'title' },
     { header: 'Autor', field: 'author' },
@@ -52,8 +52,6 @@ export class ListPageComponent implements OnInit {
   loadAuthors(): void {
     this.authorSerivce.getAuthors()
       .subscribe((response: any) => {
-        console.log("getAuthors")
-        console.log(response)
         this.authors = response
       });
   }
@@ -93,13 +91,22 @@ export class ListPageComponent implements OnInit {
   }
 
   onEdit(item: any): void {
-    console.log("3 onEdit")
-    console.log(item)
+    this.updateBook(item);
+  }
+
+  updateBook(item: any) {
+    this.bookService.updateBook(item.id, item).subscribe(
+      (response: BookResponseDto) => {
+        console.log('Libro actualizado:', response);
+        this.loadBooks();
+      },
+      (error) => {
+        console.error('Error al actualizar el libro:', error);
+      }
+    );
   }
 
   onDelete(item: any): void {
-    console.log("onDelete")
-    console.log(item)
     this.bookService.deleteBook(item.id).subscribe(() => {
       this.loadBooks();
     });
