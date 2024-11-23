@@ -1,7 +1,5 @@
-<p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [style]="{ width: '400px' }">
+<p-dialog [header]="formTitle" [(visible)]="visible" [modal]="true" [closable]="false" [style]="{ width: '400px' }">
   <div *ngIf="entity">
-    <h3 class="text-center">{{ formTitle }}</h3>
-
     <form [formGroup]="entityForm" (ngSubmit)="save()">
       <div *ngFor="let field of entityFields">
         <label for="{{ field.field }}">{{ field.label }}</label>
