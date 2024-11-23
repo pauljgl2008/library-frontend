@@ -6,10 +6,10 @@ import { EntityField } from '../../model/entityField';
 import { BookResponseDto } from '../../model/book-response-dto';
 
 @Component({
-  selector: 'app-list-page',
-  templateUrl: './list-page.component.html'
+  selector: 'app-books-list-page',
+  templateUrl: './books-list-page.component.html'
 })
-export class ListPageComponent implements OnInit {
+export class BooksListPageComponent implements OnInit {
 
   books: any;
   pageIndex: number = 0;

@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
-    path: 'books',
-    loadChildren: () => import('./books/books.module').then( m => m.BooksModule ),
+    path: '',
+    loadChildren: () => import('./library/books.module').then( m => m.BooksModule ),
   },
   {
     path: '404',

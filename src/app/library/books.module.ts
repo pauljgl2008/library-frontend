@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BooksRoutingModule } from './books-routing.module';
 
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
-import { ListPageComponent } from './pages/list-page/list-page.component';
+import { BooksListPageComponent } from './pages/books/books-list-page.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { DeleteEntityComponent } from './components/data-table/delete-entity/delete-entity.component';
 import { NgModule } from '@angular/core';
@@ -22,7 +22,7 @@ import { EditEntityComponent } from './components/data-table/edit-entity/edit-en
     EditEntityComponent,
     DeleteEntityComponent,
     LayoutPageComponent,
-    ListPageComponent,
+    BooksListPageComponent,
     DataTableComponent
   ],
   imports: [
