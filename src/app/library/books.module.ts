@@ -1,3 +1,4 @@
+import { AuthorsListPageComponent } from './pages/authors/authors-list-page.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -15,6 +16,8 @@ import { ToolbarModule  } from 'primeng/toolbar';
 import { PanelMenuModule  } from 'primeng/panelmenu';
 import { CreateEntityComponent } from './components/data-table/create-entity/create-entity.component';
 import { EditEntityComponent } from './components/data-table/edit-entity/edit-entity.component';
+import { LoansListPageComponent } from './pages/loans/loans-list-page.component';
+import { DashboardPageComponent } from './pages/dashboard/dashboard-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { EditEntityComponent } from './components/data-table/edit-entity/edit-en
     DeleteEntityComponent,
     LayoutPageComponent,
     BooksListPageComponent,
+    AuthorsListPageComponent,
+    LoansListPageComponent,
+    DashboardPageComponent,
     DataTableComponent
   ],
   imports: [

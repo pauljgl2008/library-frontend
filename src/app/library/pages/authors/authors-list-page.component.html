@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-end mb-4 me-4 mt-4">
+  <p-button label="Crear autor" severity="success" (onClick)="onCreate()" icon="pi pi-plus" />
+</div>
+
+<!-- Modal de Creación de Libro -->
+<app-create-entity [(visible)]="visible" [entityFields]="entityFields" [entity]="newBook" [authorOptions]="authors" (saveItem)="onSaveItem($event)" (cancel)="onCancelCreate()">
+</app-create-entity>
+
+<!-- DataTable -->
+<app-data-table
+[authorOptions]="authors"
+[data]="books" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
+  [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)"
+  [entityFields]="entityFields"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>
