@@ -8,9 +8,9 @@ import { Author } from '../model/author';
   providedIn: 'root'
 })
 export class AuthorService {
-  private baseUrl: string = environments.baseUrl;
+  private readonly baseUrl: string = environments.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   getAuthors(): Observable<Author[]> {
     return this.http.get<any>(`${this.baseUrl}/authors`);

@@ -1,4 +1,3 @@
-import { Author } from './../../model/author';
 import {
   Component,
   EventEmitter,

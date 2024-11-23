@@ -42,7 +42,7 @@ export class ListPageComponent implements OnInit {
     status: 'Disponible'
   };
 
-  constructor(private bookService: BookService, private authorSerivce: AuthorService) { }
+  constructor(private readonly bookService: BookService, private readonly authorSerivce: AuthorService) { }
 
   ngOnInit(): void {
     this.loadBooks();
@@ -95,15 +95,15 @@ export class ListPageComponent implements OnInit {
   }
 
   updateBook(item: any) {
-    this.bookService.updateBook(item.id, item).subscribe(
-      (response: BookResponseDto) => {
+    this.bookService.updateBook(item.id, item).subscribe({
+      next: (response: BookResponseDto) => {
         console.log('Libro actualizado:', response);
         this.loadBooks();
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al actualizar el libro:', error);
       }
-    );
+    });
   }
 
   onDelete(item: any): void {

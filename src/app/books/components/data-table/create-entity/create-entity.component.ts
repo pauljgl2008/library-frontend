@@ -1,17 +1,31 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { EntityField } from './entityField';
 
 @Component({
   selector: 'app-create-entity',
-  templateUrl: './create-entity.component.html'
+  templateUrl: './create-entity.component.html',
 })
 export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() visible = false;
 
   @Input() entity: { [key: string]: any } = {};
   @Input() entityFields: EntityField[] = [];
-  @Input() authorOptions: { id: number, name: string }[] = [];
+  @Input() authorOptions: { id: number; name: string }[] = [];
 
   @Input() formTitle = 'Crear registro';
   @Input() submitLabel = 'Guardar';
@@ -23,7 +37,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   entityForm: FormGroup;
   isSaving: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     this.entityForm = this.fb.group({});
   }
 
@@ -45,11 +59,11 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   private buildForm(): void {
     const formGroup: { [key: string]: any } = {};
 
-    this.entityFields.forEach(field => {
+    this.entityFields.forEach((field) => {
       const fieldValidators = [
         Validators.required,
         this.notEmptyValidator,
-        ...this.getFieldValidators(field)
+        ...this.getFieldValidators(field),
       ];
 
       if (field.field === 'isbn') {
@@ -61,10 +75,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
         defaultValue = new Date().toISOString().split('T')[0];
       }
 
-      formGroup[field.field] = [
-        defaultValue,
-        fieldValidators
-      ];
+      formGroup[field.field] = [defaultValue, fieldValidators];
     });
 
     this.entityForm = this.fb.group(formGroup);
@@ -79,7 +90,10 @@ export class CreateEntityComponent implements OnInit, OnChanges {
     return validators;
   }
 
-  private addFieldSpecificValidators(field: EntityField, validators: Validators[]): void {
+  private addFieldSpecificValidators(
+    field: EntityField,
+    validators: Validators[]
+  ): void {
     switch (field.type) {
       case 'date':
         validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));
@@ -98,11 +112,10 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   }
 
   private updateDateFields(): void {
-    this.entityFields.forEach(field => {
+    this.entityFields.forEach((field) => {
       if (field.type === 'date') {
         const control = this.entityForm.get(field.field);
         if (control && !control.value) {
-          // Si el campo de fecha no tiene valor, asignamos la fecha actual
           control.setValue(new Date().toISOString().split('T')[0]);
         }
       }
@@ -110,7 +123,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   }
 
   private markAllFieldsAsTouched(): void {
-    Object.keys(this.entityForm.controls).forEach(field => {
+    Object.keys(this.entityForm.controls).forEach((field) => {
       const control = this.entityForm.get(field);
       if (control) {
         control.markAsTouched();
@@ -149,9 +162,13 @@ export class CreateEntityComponent implements OnInit, OnChanges {
     if (this.entityForm.invalid) {
       this.markAllFieldsAsTouched();
     }
+    this.hideForm();
+    this.resetForm();
+  }
+
+  private hideForm(): void {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-    this.resetForm();
   }
 
   private processAuthorField(): void {
@@ -167,7 +184,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   private notEmptyValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value === null || control.value === '') {
-      return { 'notEmpty': true };
+      return { notEmpty: true };
     }
     return null;
   }

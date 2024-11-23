@@ -22,7 +22,7 @@ export class EditEntityComponent {
   entity: { [key: string]: any } = {};
   isSaving: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     this.entityForm = this.fb.group({});
   }
 
@@ -121,13 +121,6 @@ export class EditEntityComponent {
   }
 
   cancel(): void {
-    if (this.entityForm.invalid) {
-      this.markAllFieldsAsTouched();
-    }
-    this.closeForm();
-  }
-
-  close(): void {
     if (this.entityForm.invalid) {
       this.markAllFieldsAsTouched();
     }

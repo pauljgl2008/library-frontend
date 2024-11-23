@@ -8,9 +8,9 @@ import { environments } from '../../../environments/environments';
   providedIn: 'root',
 })
 export class BookService {
-  private baseUrl: string = environments.baseUrl;
+  private readonly baseUrl: string = environments.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   getPaginatedBooks(
     page: number,
