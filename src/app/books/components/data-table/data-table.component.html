@@ -21,7 +21,7 @@
           <td *ngFor="let col of columns" [style.width]="col.field === 'actions' ? '150px' : 'auto'">
             <!-- Si la columna es 'actions', mostrar los botones de editar y eliminar -->
             <ng-container *ngIf="col.field === 'actions'; else displayValue">
-              <button class="btn btn-outline-warning btn-sm" (click)="onEdit(item)">Editar</button>
+              <button class="btn btn-outline-warning btn-sm me-2" (click)="onEdit(item)">Editar</button>
               <button class="btn btn-outline-danger btn-sm" (click)="onDelete(item)">Eliminar</button>
             </ng-container>
 
