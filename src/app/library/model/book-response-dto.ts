@@ -1,7 +1,7 @@
 export class BookResponseDto {
   id: number;
   title: string;
-  author: number;
+  author_id: number;
   isbn: string;
   publicationDate: string;
   status: string;
@@ -9,14 +9,14 @@ export class BookResponseDto {
   constructor(
     id: number,
     title: string,
-    author: number,
+    author_id: number,
     isbn: string,
     publicationDate: string,
     status: string
   ) {
     this.id = id;
     this.title = title;
-    this.author = author;
+    this.author_id = author_id;
     this.isbn = isbn;
     this.publicationDate = publicationDate;
     this.status = status;

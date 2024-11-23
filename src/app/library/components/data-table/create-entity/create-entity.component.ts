@@ -172,9 +172,9 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   }
 
   private processAuthorField(): void {
-    const author = this.entityForm.value['author'];
+    const author = this.entityForm.value['author_id'];
     if (author) {
-      this.entityForm.value['author'] = Number(author);
+      this.entityForm.value['author_id'] = Number(author);
     }
   }
 

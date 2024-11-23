@@ -1,7 +1,7 @@
 export interface Book {
   id: number;
   title: string;
-  author: string;
+  author_id: string;
   isbn: string;
   status: string;
   publication_date: string;

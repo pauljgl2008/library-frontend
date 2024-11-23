@@ -28,7 +28,7 @@
             <!-- Mostrar el valor de la columna o el nombre del autor si está presente -->
             <ng-template #displayValue>
               <!-- Si el campo es 'author', mostrar el nombre del autor, en caso contrario, mostrar el valor directamente -->
-              <ng-container *ngIf="col.field === 'author'; else normalValue">
+              <ng-container *ngIf="col.field === 'author_id'; else normalValue">
                 {{ getAuthorName(item[col.field]) }}
               </ng-container>
               <ng-template #normalValue>

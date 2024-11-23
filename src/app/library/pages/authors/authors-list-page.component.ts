@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../../services/book.service';
 import { AuthorService } from '../../services/author.service';
 import { EntityField } from '../../model/entityField';
 import { BookResponseDto } from '../../model/book-response-dto';

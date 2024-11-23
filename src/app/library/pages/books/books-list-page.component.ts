@@ -20,7 +20,7 @@ export class BooksListPageComponent implements OnInit {
   bookIdToDelete: number | null = null;
   columns = [
     { header: 'Título', field: 'title' },
-    { header: 'Autor', field: 'author' },
+    { header: 'Autor', field: 'author_id' },
     { header: 'Isbn', field: 'isbn' },
     { header: 'Estado', field: 'status' },
     { header: 'Fecha de publicación', field: 'publication_date' },
@@ -28,7 +28,7 @@ export class BooksListPageComponent implements OnInit {
   ];
   entityFields: EntityField[] = [
     { field: 'title', label: 'Título', type: 'text' },
-    { field: 'author', label: 'Autor', type: 'select' },
+    { field: 'author_id', label: 'Autor', type: 'select' },
     { field: 'isbn', label: 'ISBN', type: 'text' },
     { field: 'status', label: 'Estado', type: 'select' },
     { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }

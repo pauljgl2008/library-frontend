@@ -102,9 +102,9 @@ export class EditEntityComponent {
   }
 
   private processAuthorField(): void {
-    const author = this.entityForm.value['author'];
+    const author = this.entityForm.value['author_id'];
     if (author) {
-      this.entityForm.value['author'] = Number(author); // Ensure the author ID is processed correctly
+      this.entityForm.value['author_id'] = Number(author); // Ensure the author ID is processed correctly
     }
   }
 
