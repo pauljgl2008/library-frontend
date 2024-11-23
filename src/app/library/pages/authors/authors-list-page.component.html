@@ -8,10 +8,8 @@
 
 <!-- DataTable -->
 <app-data-table
-[authorOptions]="authors"
-[data]="books" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
-  [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
-  (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)"
+[data]="authors" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
+  [totalPages]="totalPages" [filterText]="filterText"
   [entityFields]="entityFields"
   (edit)="onEdit($event)"
   (delete)="onDelete($event)">
