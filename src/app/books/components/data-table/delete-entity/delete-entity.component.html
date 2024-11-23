@@ -1,25 +1,9 @@
 <p-dialog header="Eliminar registro" [(visible)]="visible" [modal]="true" [closable]="false"
-  [style]="{ width: '400px' }">
-
-  <div *ngIf="itemToDelete" class="modal-body">
-    ¿Desea eliminar el registro <strong>{{ itemToDelete.title }}</strong> con id <strong>{{ itemToDelete.id }}</strong>?
+  [style]="{ width: '25rem' }">
+  <span *ngIf="itemToDelete" class="p-text-secondary block mb-5">¿Desea eliminar el registro <strong>{{
+      itemToDelete.title }}</strong> con id <strong>{{ itemToDelete.id }}</strong>?</span>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="No" icon="pi pi-times" (onClick)="onCancel()" severity="danger" class="p-button-outlined" />
+    <p-button label="Sí" icon="pi pi-check" (onClick)="onConfirm()" severity="success" />
   </div>
-
-  <p-footer>
-    <!-- Usar Flexbox para mejorar el layout de los botones en pantallas pequeñas -->
-    <div class="d-flex justify-content-between w-100" style="flex-wrap: wrap; gap: 10px;">
-
-      <!-- Botón No -->
-      <button type="button" pButton label="No" icon="pi pi-times" (click)="onCancel()"
-        class="p-button-danger p-button-raised p-button-rounded p-button-sm w-auto"
-        style="flex: 1 1 48%; max-width: 180px;">
-      </button>
-
-      <!-- Botón Sí -->
-      <button type="button" pButton label="Sí" icon="pi pi-check"
-        class="p-button-success p-button-raised p-button-rounded p-button-sm w-auto" (click)="onConfirm()"
-        style="flex: 1 1 48%; max-width: 180px;">
-      </button>
-    </div>
-  </p-footer>
 </p-dialog>
