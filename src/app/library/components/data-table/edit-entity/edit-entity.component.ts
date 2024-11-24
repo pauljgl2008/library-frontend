@@ -24,7 +24,7 @@ export class EditEntityComponent {
   @Output() confirmEdition = new EventEmitter<boolean>();
   @Input() entityFields: EntityField[] = [];
   @Input() formTitle: string = 'Editar registro';
-  @Input() submitLabel: string = 'Guardar';
+  @Input() submitLabel: string = 'Actualizar';
   @Input() cancelLabel: string = 'Cancelar';
   @Input() authorOptions: { id: number; name: string }[] = [];
   @Input() bookOptions: { id: number; title: string }[] = [];
