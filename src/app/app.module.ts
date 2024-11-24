@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     SharedModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

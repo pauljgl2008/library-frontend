@@ -21,7 +21,8 @@ import { EditEntityComponent } from './components/data-table/edit-entity/edit-en
 import { LoansListPageComponent } from './pages/loans/loans-list-page.component';
 import { DashboardPageComponent } from './pages/dashboard/dashboard-page.component';
 import { DetailEntityComponent } from './components/data-table/detail-entity/detail-entity.component';
-
+// Importar los módulos de PrimeNG
+import { MessageModule } from 'primeng/message';
 @NgModule({
   declarations: [
     CreateEntityComponent,
@@ -46,7 +47,8 @@ import { DetailEntityComponent } from './components/data-table/detail-entity/det
     CardModule,
     DialogModule,
     ToastModule,
-    TableModule
+    TableModule,
+    MessageModule
   ]
 })
 export class BooksModule { }

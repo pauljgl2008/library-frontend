@@ -17,3 +17,13 @@
   (edit)="onEdit($event)"
   (delete)="onDelete($event)">
 </app-data-table>
+
+<p-dialog [(visible)]="visibleErrorModal" header="Error" [modal]="true" [closable]="false" [style]="{width: '400px'}">
+  <div *ngFor="let message of errorMessages">
+    <p>{{ message }}</p>
+  </div>
+  <p-footer>
+    <button pButton type="button" label="Cerrar" icon="pi pi-times" (click)="visibleErrorModal = false"></button>
+  </p-footer>
+</p-dialog>
+<!-- El resto de tu HTML (Formulario de creación de libro, etc.) -->

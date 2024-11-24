@@ -46,7 +46,7 @@
   </div>
 
   <!-- Paginación -->
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between" *ngIf="entityType === 'book'">
     <div>
       <label for="pageSize" class="mb-0 me-2">Filas por página:</label>
       <select id="pageSize" class="form-select form-select-sm" [(ngModel)]="pageSize"
