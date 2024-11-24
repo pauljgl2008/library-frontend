@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule  } from 'primeng/toolbar';
+import { CardModule  } from 'primeng/card';
 import { PanelMenuModule  } from 'primeng/panelmenu';
 import { CreateEntityComponent } from './components/data-table/create-entity/create-entity.component';
 import { EditEntityComponent } from './components/data-table/edit-entity/edit-entity.component';
@@ -39,6 +40,7 @@ import { DashboardPageComponent } from './pages/dashboard/dashboard-page.compone
     PanelMenuModule,
     ToolbarModule,
     ButtonModule,
+    CardModule,
     DialogModule,
     ToastModule
   ]
