@@ -27,6 +27,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() entityType: string = '';
   @Input() entityFields: EntityField[] = [];
   @Input() authorOptions: { id: number; name: string }[] = [];
+  @Input() bookOptions: { id: number; title: string }[] = [];
 
   @Input() formTitle = 'Crear registro';
   @Input() submitLabel = 'Guardar';

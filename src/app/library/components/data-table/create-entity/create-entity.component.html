@@ -28,10 +28,14 @@
               <option value="Activo">Activo</option>
               <option value="Finalizado">Finalizado</option>
             </ng-container>
-
             <ng-container *ngIf="field.field === 'author_id'">
               <option *ngFor="let option of authorOptions" [value]="option.id">
                 {{ option.name }}
+              </option>
+            </ng-container>
+            <ng-container *ngIf="field.field === 'book_id'">
+              <option *ngFor="let option of bookOptions" [value]="option.id">
+                {{ option.title }}
               </option>
             </ng-container>
           </select>
