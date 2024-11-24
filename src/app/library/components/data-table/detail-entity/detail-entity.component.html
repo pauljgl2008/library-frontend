@@ -1,8 +1,7 @@
-<p-dialog [header]="formTitle" [(visible)]="visible" [modal]="true" [closable]="false" [style]="{ width: '400px' }">
+<p-dialog [header]="formTitle" [(visible)]="visible" [modal]="true" [closable]="false">
   <form [formGroup]="entityForm">
     <div *ngFor="let field of entityFields">
       <label for="{{ field.field }}">{{ field.label }}</label>
-
       <!-- Condición para mostrar un input o un select -->
       <ng-container *ngIf="field.type !== 'select'; else selectField">
         <input
@@ -15,7 +14,6 @@
           [attr.aria-describedby]="field.field + '-error'"
           [readonly]="isReadonly" /> <!-- Campo solo lectura -->
       </ng-container>
-
       <!-- Dropdown para el campo 'author' o 'status' -->
       <ng-template #selectField>
         <select
@@ -42,21 +40,22 @@
           </ng-container>
         </select>
       </ng-template>
-
-      <!-- Mensajes de error -->
-      <div *ngIf="entityForm.get(field.field)?.touched && entityForm.get(field.field)?.invalid">
-        <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('required')">
-          Este campo es obligatorio.
-        </small>
-        <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('pattern')">
-          Formato no válido.
-        </small>
-        <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('maxlength')">
-          El campo no puede tener más de 14 caracteres.
-        </small>
-      </div>
     </div>
-
+    <label>Lista de Préstamos por Libro</label> <!-- Título de la tabla -->
+    <div class="card">
+      <p-table [value]="loansByBook" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of columns" [attr.scope]="'col'">{{ col.header }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-loan>
+          <tr>
+            <td *ngFor="let col of columns">{{ loan[col.field] }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
     <p-footer>
       <div class="d-flex justify-content-center align-items-center w-100">
         <!-- Solo permitir cancelar (sin acción de enviar) -->

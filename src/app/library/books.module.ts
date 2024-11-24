@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule  } from 'primeng/toolbar';
 import { CardModule  } from 'primeng/card';
+import { TableModule   } from 'primeng/table';
 import { PanelMenuModule  } from 'primeng/panelmenu';
 import { CreateEntityComponent } from './components/data-table/create-entity/create-entity.component';
 import { EditEntityComponent } from './components/data-table/edit-entity/edit-entity.component';
@@ -44,7 +45,8 @@ import { DetailEntityComponent } from './components/data-table/detail-entity/det
     ButtonModule,
     CardModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    TableModule
   ]
 })
 export class BooksModule { }

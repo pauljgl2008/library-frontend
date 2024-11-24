@@ -20,7 +20,12 @@ export class DetailEntityComponent {
   @Input() isReadonly: boolean = true;  // Nueva propiedad para definir si es solo lectura
 
   @Output() detailItem = new EventEmitter<{ [key: string]: any }>();
-
+  columns = [
+    { header: 'Fecha de préstamo', field: 'loan_date' },
+    { header: 'Fecha de devolución', field: 'return_date' },
+    { header: 'Estado', field: 'status' },
+    { header: 'Libro', field: 'book_id' },
+  ];
   entityForm: FormGroup;
   entity: { [key: string]: any } = {};
   isSaving: boolean = false;
@@ -85,7 +90,6 @@ export class DetailEntityComponent {
     const controlConfig = this.isReadonly ? { value: defaultValue, disabled: true } : { value: defaultValue };
     return [controlConfig];
   }
-
 
   private getDefaultFieldValue(field: EntityField): any {
     let defaultValue = this.entity[field.field] || null;
