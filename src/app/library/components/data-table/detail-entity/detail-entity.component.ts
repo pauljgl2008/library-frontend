@@ -1,7 +1,13 @@
-import { Input, Output, EventEmitter, SimpleChanges, Component } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { EntityField } from "src/app/library/model/entityField";
-import { LoanService } from "src/app/library/services/loan.service";
+import {
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  Component,
+} from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { EntityField } from 'src/app/library/model/entityField';
+import { LoanService } from 'src/app/library/services/loan.service';
 
 @Component({
   selector: 'app-detail-entity',
@@ -17,7 +23,7 @@ export class DetailEntityComponent {
   @Input() authorOptions: { id: number; name: string }[] = [];
   @Input() bookOptions: { id: number; title: string }[] = [];
   @Input() entityType: string = '';
-  @Input() isReadonly: boolean = true;  // Nueva propiedad para definir si es solo lectura
+  @Input() isReadonly: boolean = true; // Nueva propiedad para definir si es solo lectura
 
   @Output() detailItem = new EventEmitter<{ [key: string]: any }>();
   columns = [
@@ -31,7 +37,7 @@ export class DetailEntityComponent {
   isSaving: boolean = false;
   loansByBook: any = [];
 
-  constructor(private readonly fb: FormBuilder, private readonly loanService: LoanService) {
+  constructor(private fb: FormBuilder, private loanService: LoanService) {
     this.entityForm = this.fb.group({});
   }
 
@@ -43,25 +49,23 @@ export class DetailEntityComponent {
     if (changes['entityFields'] && !changes['entityFields'].firstChange) {
       this.rebuildForm();
     }
-    if (changes['itemToDetail']) {
-      if(this.itemToDetail){
-      this.getLoansByBook(this.itemToDetail.id)
-    }
+    if (this.itemToDetail) {
       this.updateEntityFromItem(this.itemToDetail);
       this.rebuildForm();
+      this.getLoansByBook(this.itemToDetail.id);
     }
   }
 
   getLoansByBook(bookId: number): void {
     this.loanService.getLoansByBook(bookId).subscribe({
       next: (loansByBook) => {
-        console.log("loansByBookId")
-        console.log(loansByBook)
+        console.log('loansByBookId');
+        console.log(loansByBook);
         this.loansByBook = loansByBook;
       },
       error: (err) => {
         console.error('Error al obtener los préstamos', err);
-      }
+      },
     });
   }
 
@@ -87,7 +91,9 @@ export class DetailEntityComponent {
 
   private createFormControl(field: EntityField) {
     const defaultValue = this.getDefaultFieldValue(field);
-    const controlConfig = this.isReadonly ? { value: defaultValue, disabled: true } : { value: defaultValue };
+    const controlConfig = this.isReadonly
+      ? { value: defaultValue, disabled: true }
+      : { value: defaultValue };
     return [controlConfig];
   }
 
