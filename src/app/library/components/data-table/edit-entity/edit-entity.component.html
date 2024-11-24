@@ -24,6 +24,11 @@
               {{ option.name }}
             </option>
           </ng-container>
+          <ng-container *ngIf="field.field === 'book_id'">
+            <option *ngFor="let option of bookOptions" [value]="option.id">
+              {{ option.title }}
+            </option>
+          </ng-container>
         </select>
       </ng-template>
 

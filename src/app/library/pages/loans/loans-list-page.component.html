@@ -8,6 +8,7 @@
 
 <!-- DataTable -->
 <app-data-table
+[bookOptions]="books"
 [data]="loans" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
   [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
   (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)"

@@ -70,6 +70,6 @@
   (confirmDeletion)="onConfirmDeletion($event)"></app-delete-entity>
 
 <!-- Modal de Confirmación de Eliminación -->
-<app-edit-entity [authorOptions]="authorOptions"
+<app-edit-entity [authorOptions]="authorOptions" [bookOptions]="bookOptions"
 [visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit" (editItem)="onEditItem($event)"
   (confirmEdition)="onConfirmEdition($event)"></app-edit-entity>
