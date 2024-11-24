@@ -22,6 +22,7 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() filterText: string = '';
   @Input() entityFields: EntityField[] = [];
   @Input() authorOptions: { id: number; name: string }[] = [];
+  @Input() bookOptions: { id: number; title: string }[] = [];
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
@@ -115,6 +116,20 @@ export class DataTableComponent implements OnInit, OnChanges {
     const author = this.authorOptions.find((option) => option.id === authorId);
     return author ? author.name : 'Desconocido';
   }
+
+getBookTitle(bookId: number): string {
+  console.log("getBookTitle")
+  console.log(this.bookOptions)
+  console.log(bookId)
+
+  if (!this.bookOptions || !Array.isArray(this.bookOptions)) {
+    return 'Desconocido';
+  }
+
+  const book = this.bookOptions.find((option) => option.id === bookId);
+  return book ? book.title : 'Desconocido';
+}
+
 
   onDelete(item: any): void {
     this.itemToDelete = item;

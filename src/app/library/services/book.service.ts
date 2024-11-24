@@ -20,6 +20,11 @@ export class BookService {
       `${this.baseUrl}/books?page=${page}&size=${size}`
     );
   }
+  getAllBooks(): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/books/getAll`
+    );
+  }
 
   addBook(book: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/books`, book);

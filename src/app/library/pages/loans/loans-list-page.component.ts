@@ -1,3 +1,4 @@
+import { BookService } from './../../services/book.service';
 import { Component, OnInit } from '@angular/core';
 import { EntityField } from '../../model/entityField';
 import { BookResponseDto } from '../../model/book-response-dto';
@@ -9,7 +10,6 @@ import { LoanService } from '../../services/loan.service';
 })
 export class LoansListPageComponent implements OnInit {
 
-  books: any;
   pageIndex: number = 0;
   pageSize: number = 5;
   visible: boolean = false;
@@ -27,8 +27,9 @@ export class LoansListPageComponent implements OnInit {
     { field: 'loan_date', label: 'Fecha de préstamo', type: 'date' },
     { field: 'return_date', label: 'Fecha de devolución', type: 'date' },
     { field: 'status', label: 'Estado', type: 'select' },
-    { field: 'book_id', label: 'Libro', type: 'text' }
+    { field: 'book_id', label: 'Libro', type: 'select' }
   ];
+  books: any;
   loans: any;
   newBook: any = {
     title: null,
@@ -38,16 +39,23 @@ export class LoansListPageComponent implements OnInit {
     status: 'Disponible'
   };
 
-  constructor(private readonly loanService: LoanService) { }
+  constructor(private readonly loanService: LoanService, private readonly bookService: BookService) { }
 
   ngOnInit(): void {
     this.loadLoans();
+    this.loadBooks();
   }
 
   loadLoans(): void {
     this.loanService.getLoans()
       .subscribe((response: any) => {
         this.loans = response
+      });
+  }
+  loadBooks(): void {
+    this.bookService.getAllBooks()
+      .subscribe((response: any) => {
+        this.books = response
       });
   }
 
