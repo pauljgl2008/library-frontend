@@ -5,25 +5,21 @@ import { NgModule } from '@angular/core';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./library/books.module').then( m => m.BooksModule ),
+    loadChildren: () => import('./library/books.module').then(m => m.BooksModule),
   },
   {
     path: '404',
     component: Error404PageComponent,
   },
   {
-    path: '',
-    redirectTo: 'books',
-    pathMatch: 'full'
-  },
-  {
     path: '**',
-    redirectTo: '404',
+    redirectTo: '/404',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

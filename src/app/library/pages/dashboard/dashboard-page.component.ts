@@ -39,7 +39,6 @@ export class DashboardPageComponent implements OnInit {
   loadLoans(): void {
     this.loanService.getLoans().subscribe((response: any) => {
       this.loans = response.length;
-      console.log(this.loans);
     });
   }
 }

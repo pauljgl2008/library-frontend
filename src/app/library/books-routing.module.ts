@@ -6,7 +6,6 @@ import { AuthorsListPageComponent } from './pages/authors/authors-list-page.comp
 import { LoansListPageComponent } from './pages/loans/loans-list-page.component';
 import { DashboardPageComponent } from './pages/dashboard/dashboard-page.component';
 
-
 const routes: Routes = [
   {
     path: '',

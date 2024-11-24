@@ -3,7 +3,7 @@ export class BookRequestDto {
   title: string;
   author_id: number;
   isbn: string;
-  publicationDate: string; // Usamos string porque es más fácil de manejar en JSON
+  publicationDate: string;
   status: string;
 
   constructor(

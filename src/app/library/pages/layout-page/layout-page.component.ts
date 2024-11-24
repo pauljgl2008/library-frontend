@@ -21,5 +21,4 @@ export class LayoutPageComponent {
         : sidebar.classList.add('d-none');
     }
   }
-
 }
