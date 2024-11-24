@@ -2,31 +2,16 @@
   <form [formGroup]="entityForm">
     <div *ngFor="let field of entityFields">
       <label for="{{ field.field }}">{{ field.label }}</label>
-      <!-- Condición para mostrar un input o un select -->
       <ng-container *ngIf="field.type !== 'select'; else selectField">
-        <input
-          id="{{ field.field }}"
-          formControlName="{{ field.field }}"
-          [type]="field.type"
-          class="form-control mb-3"
-          [placeholder]="'Ingresa ' + field.label"
-          [attr.maxlength]="field.field === 'isbn' ? 14 : null"
-          [attr.aria-describedby]="field.field + '-error'"
-          [readonly]="isReadonly" /> <!-- Campo solo lectura -->
+        <input id="{{ field.field }}" formControlName="{{ field.field }}" [type]="field.type" class="form-control mb-3"
+          [placeholder]="'Ingresa ' + field.label" [attr.maxlength]="field.field === 'isbn' ? 14 : null"
+          [attr.aria-describedby]="field.field + '-error'" [readonly]="isReadonly" />
       </ng-container>
-      <!-- Dropdown para el campo 'author' o 'status' -->
       <ng-template #selectField>
-        <select
-          id="{{ field.field }}"
-          formControlName="{{ field.field }}"
-          class="form-control mb-3"> <!-- Campo solo lectura -->
+        <select id="{{ field.field }}" formControlName="{{ field.field }}" class="form-control mb-3">
           <ng-container *ngIf="field.field === 'status' && entityType==='book'">
             <option value="Disponible">Disponible</option>
             <option value="No disponible">No disponible</option>
-          </ng-container>
-          <ng-container *ngIf="field.field === 'status' && entityType==='loan'">
-            <option value="Activo">Activo</option>
-            <option value="Finalizado">Finalizado</option>
           </ng-container>
           <ng-container *ngIf="field.field === 'author_id'">
             <option *ngFor="let option of authorOptions" [value]="option.id">
@@ -41,8 +26,8 @@
         </select>
       </ng-template>
     </div>
-    <label>Lista de Préstamos por Libro</label> <!-- Título de la tabla -->
-    <div class="card">
+    <p>Lista de Préstamos por Libro</p>
+    <div class="my-3 card">
       <p-table [value]="loansByBook" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
           <tr>
@@ -58,7 +43,6 @@
     </div>
     <p-footer>
       <div class="d-flex justify-content-center align-items-center w-100">
-        <!-- Solo permitir cancelar (sin acción de enviar) -->
         <p-button severity="danger" [label]="cancelLabel" type="button" (onClick)="cancel()" icon="pi pi-times" />
       </div>
     </p-footer>
