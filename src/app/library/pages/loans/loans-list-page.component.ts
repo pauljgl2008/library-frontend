@@ -6,10 +6,9 @@ import { LoanService } from '../../services/loan.service';
 
 @Component({
   selector: 'app-loans-list-page',
-  templateUrl: './loans-list-page.component.html'
+  templateUrl: './loans-list-page.component.html',
 })
 export class LoansListPageComponent implements OnInit {
-
   pageIndex: number = 0;
   pageSize: number = 5;
   visible: boolean = false;
@@ -27,7 +26,7 @@ export class LoansListPageComponent implements OnInit {
     { field: 'loan_date', label: 'Fecha de préstamo', type: 'date' },
     { field: 'return_date', label: 'Fecha de devolución', type: 'date' },
     { field: 'status', label: 'Estado', type: 'select' },
-    { field: 'book_id', label: 'Libro', type: 'select' }
+    { field: 'book_id', label: 'Libro', type: 'select' },
   ];
   books: any;
   loans: any;
@@ -36,42 +35,42 @@ export class LoansListPageComponent implements OnInit {
     author: null,
     isbn: null,
     publication_date: null,
-    status: 'Disponible'
+    status: 'Disponible',
   };
 
-  constructor(private readonly loanService: LoanService, private readonly bookService: BookService) { }
+  constructor(
+    private readonly loanService: LoanService,
+    private readonly bookService: BookService
+  ) {}
 
   ngOnInit(): void {
-    this.loadLoans();
-    this.loadBooks();
+    this.loadData();
   }
 
-  loadLoans(): void {
-    this.loanService.getLoans()
-      .subscribe((response: any) => {
-        this.loans = response
+  loadData(): void {
+    this.bookService.getAllBooks().subscribe((response: any) => {
+      this.books = response;
+      console.log('boooks');
+      this.loanService.getLoans().subscribe((response: any) => {
+        console.log('loaaaanss');
+        this.loans = response;
       });
-  }
-  loadBooks(): void {
-    this.bookService.getAllBooks()
-      .subscribe((response: any) => {
-        this.books = response
-      });
+    });
   }
 
   onPageChange(page: number): void {
     this.pageIndex = page;
-    this.loadLoans();
+    this.loadData();
   }
 
   onPageSizeChange(size: number): void {
     this.pageSize = size;
-    this.loadLoans();
+    this.loadData();
   }
 
   onFilterChange(filter: string): void {
     this.filterText = filter;
-    this.loadLoans();
+    this.loadData();
   }
 
   onEdit(item: any): void {
@@ -82,17 +81,17 @@ export class LoansListPageComponent implements OnInit {
     this.loanService.updateLoan(item.id, item).subscribe({
       next: (response: BookResponseDto) => {
         console.log('Préstamo actualizado:', response);
-        this.loadLoans();
+        this.loadData();
       },
       error: (error) => {
         console.error('Error al actualizar el préstamo:', error);
-      }
+      },
     });
   }
 
   onDelete(item: any): void {
     this.loanService.deleteLoan(item.id).subscribe(() => {
-      this.loadLoans();
+      this.loadData();
     });
   }
 
@@ -102,7 +101,7 @@ export class LoansListPageComponent implements OnInit {
       author: null,
       isbn: null,
       publication_date: null,
-      status: 'Disponible'
+      status: 'Disponible',
     };
     this.visible = true;
   }
@@ -110,7 +109,7 @@ export class LoansListPageComponent implements OnInit {
   onSaveItem(item: any): void {
     this.loanService.addLoan(item).subscribe((response) => {
       console.log('Libro creado:', response);
-      this.loadLoans();
+      this.loadData();
       this.visible = false;
     });
   }
