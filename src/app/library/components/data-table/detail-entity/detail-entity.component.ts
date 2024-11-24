@@ -23,7 +23,7 @@ export class DetailEntityComponent {
   @Input() authorOptions: { id: number; name: string }[] = [];
   @Input() bookOptions: { id: number; title: string }[] = [];
   @Input() entityType: string = '';
-  @Input() isReadonly: boolean = true; // Nueva propiedad para definir si es solo lectura
+  @Input() isReadonly: boolean = true;
 
   @Output() detailItem = new EventEmitter<{ [key: string]: any }>();
   columns = [
@@ -59,8 +59,6 @@ export class DetailEntityComponent {
   getLoansByBook(bookId: number): void {
     this.loanService.getLoansByBook(bookId).subscribe({
       next: (loansByBook) => {
-        console.log('loansByBookId');
-        console.log(loansByBook);
         this.loansByBook = loansByBook;
       },
       error: (err) => {
@@ -100,12 +98,10 @@ export class DetailEntityComponent {
   private getDefaultFieldValue(field: EntityField): any {
     let defaultValue = this.entity[field.field] || null;
     if (field.type === 'date' && !defaultValue) {
-      defaultValue = new Date().toISOString().split('T')[0]; // Default to today's date
+      defaultValue = new Date().toISOString().split('T')[0];
     }
     return defaultValue;
   }
-
-  // Resto de la lógica...
 
   cancel(): void {
     this.visible = false;

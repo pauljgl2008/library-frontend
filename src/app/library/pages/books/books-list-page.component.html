@@ -3,19 +3,15 @@
 </div>
 
 <!-- Modal de Creación de Libro -->
-<app-create-entity [entityType]="'book'" [(visible)]="visible" [entityFields]="entityFields" [entity]="newBook" [authorOptions]="authors" (saveItem)="onSaveItem($event)" (cancel)="onCancelCreate()">
+<app-create-entity [entityType]="'book'" [(visible)]="visible" [entityFields]="entityFields" [entity]="newBook"
+  [authorOptions]="authors" (saveItem)="onSaveItem($event)" (cancel)="onCancelCreate()">
 </app-create-entity>
 
 <!-- DataTable -->
-<app-data-table
-[entityType]="'book'"
-[authorOptions]="authors"
-[data]="books" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
-  [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
-  (pageSizeChange)="onPageSizeChange($event)"
-  [entityFields]="entityFields"
-  (edit)="onEdit($event)"
-  (delete)="onDelete($event)">
+<app-data-table [entityType]="'book'" [authorOptions]="authors" [data]="books" [columns]="columns"
+  [pageIndex]="pageIndex" [pageSize]="pageSize" [totalPages]="totalPages" [filterText]="filterText"
+  (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)" [entityFields]="entityFields"
+  (edit)="onEdit($event)" (delete)="onDelete($event)">
 </app-data-table>
 
 <p-dialog [(visible)]="visibleErrorModal" header="Error" [modal]="true" [closable]="false" [style]="{width: '400px'}">
@@ -26,4 +22,3 @@
     <button pButton type="button" label="Cerrar" icon="pi pi-times" (click)="visibleErrorModal = false"></button>
   </p-footer>
 </p-dialog>
-<!-- El resto de tu HTML (Formulario de creación de libro, etc.) -->

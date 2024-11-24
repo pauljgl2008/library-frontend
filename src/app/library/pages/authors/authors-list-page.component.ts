@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorService } from '../../services/author.service';
 import { EntityField } from '../../model/entityField';
 import { BookResponseDto } from '../../model/book-response-dto';
+import { MessageService } from 'primeng/api';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-authors-list-page',
@@ -32,8 +34,13 @@ export class AuthorsListPageComponent implements OnInit {
     nationality: null,
     birth_date: null,
   };
+  visibleErrorModal: boolean = false;
+  errorMessage: string = '';
 
-  constructor(private readonly authorSerivce: AuthorService) {}
+  constructor(
+    private readonly authorSerivce: AuthorService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadAuthors();
@@ -65,6 +72,22 @@ export class AuthorsListPageComponent implements OnInit {
     this.authorSerivce.deleteAuthor(item.id).subscribe(() => {
       this.loadAuthors();
     });
+    this.authorSerivce
+      .deleteAuthor(item.id)
+      .pipe(
+        catchError((error) => {
+          console.log('Error:', error);
+          this.showErrorModal(error);
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+          console.log('Libro creado:', response);
+          this.loadAuthors();
+          this.visible = false;
+        }
+      });
   }
 
   onCreate(): void {
@@ -88,5 +111,21 @@ export class AuthorsListPageComponent implements OnInit {
 
   onCancelCreate(): void {
     this.visible = false;
+  }
+
+  showErrorModal(error: any): void {
+    if (error?.error) {
+      console.log('sii');
+      this.errorMessage = error.error;
+    } else {
+      this.errorMessage = 'Ocurrió un error desconocido al guardar el libro.';
+    }
+
+    this.visibleErrorModal = true;
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: this.errorMessage,
+    });
   }
 }

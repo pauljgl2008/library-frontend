@@ -85,7 +85,7 @@ export class EditEntityComponent {
   private getDefaultFieldValue(field: EntityField): any {
     let defaultValue = this.entity[field.field] || null;
     if (field.type === 'date' && !defaultValue) {
-      defaultValue = new Date().toISOString().split('T')[0]; // Default to today's date
+      defaultValue = new Date().toISOString().split('T')[0];
     }
     return defaultValue;
   }
@@ -105,7 +105,7 @@ export class EditEntityComponent {
   ): void {
     switch (field.type) {
       case 'date':
-        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/)); // Validate date format
+        validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/));
         break;
       case 'text':
         if (field.field === 'isbn') {
@@ -119,11 +119,11 @@ export class EditEntityComponent {
   private processAuthorOrBookField(): void {
     const author = this.entityForm.value['author_id'];
     if (author) {
-      this.entityForm.value['author_id'] = Number(author); // Ensure the author ID is processed correctly
+      this.entityForm.value['author_id'] = Number(author);
     }
     const book = this.entityForm.value['book_id'];
     if (book) {
-      this.entityForm.value['book_id'] = Number(book); // Ensure the author ID is processed correctly
+      this.entityForm.value['book_id'] = Number(book);
     }
   }
 
@@ -170,7 +170,7 @@ export class EditEntityComponent {
   submit(): void {
     if (this.validateForm()) {
       this.isSaving = true;
-      this.processAuthorOrBookField(); // Process author field before saving
+      this.processAuthorOrBookField();
       setTimeout(() => {
         let x = this.entityForm.value;
         x['id'] = this.entity['id'];

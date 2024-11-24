@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-books-list-page',
   templateUrl: './books-list-page.component.html',
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class BooksListPageComponent implements OnInit {
   books: any;
@@ -45,9 +45,9 @@ export class BooksListPageComponent implements OnInit {
     status: 'Disponible',
   };
 
-  visibleErrorModal: boolean = false;  // Control de la visibilidad del modal
-  errorMessage: string = '';  // Mensaje de error
-  errorMessages: string[] = [];  // Arreglo para almacenar los mensajes de error
+  visibleErrorModal: boolean = false;
+  errorMessage: string = '';
+  errorMessages: string[] = [];
 
   constructor(
     private readonly bookService: BookService,
@@ -130,37 +130,39 @@ export class BooksListPageComponent implements OnInit {
   }
 
   onSaveItem(item: any): void {
-    this.bookService.addBook(item).pipe(
-      catchError((error) => {
-        // Capturar el error y mostrarlo en el modal
-        console.log("error")
-        console.log(error)
-        this.showErrorModal(error);
-        return of(null);  // Retorna un observable vacío para que no falle el flujo
-      })
-    ).subscribe((response) => {
-      if (response) {
-        console.log('Libro creado:', response);
-        this.loadBooks();
-        this.visible = false;  // Cerrar el modal de creación de libro si todo sale bien
-      }
-    });
+    this.bookService
+      .addBook(item)
+      .pipe(
+        catchError((error) => {
+          console.log('error');
+          console.log(error);
+          this.showErrorModal(error);
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+          console.log('Libro creado:', response);
+          this.loadBooks();
+          this.visible = false;
+        }
+      });
   }
 
-  // Función para mostrar el error en el modal
   showErrorModal(error: any): void {
-    // Inicializamos el arreglo de mensajes de error
     this.errorMessages = [];
     if (error?.error?.errors) {
       this.errorMessages = error.error.errors.map((err: any) => err.message);
     } else {
-      this.errorMessages.push('Ocurrió un error desconocido al guardar el libro.');
+      this.errorMessages.push(
+        'Ocurrió un error desconocido al guardar el libro.'
+      );
     }
     this.visibleErrorModal = true;
     this.messageService.add({
       severity: 'error',
       summary: 'Error',
-      detail: this.errorMessages.join(', ')
+      detail: this.errorMessages.join(', '),
     });
   }
 

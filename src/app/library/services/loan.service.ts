@@ -16,7 +16,6 @@ export class LoanService {
     return this.http.get<any>(`${this.baseUrl}/loans`);
   }
 
-  // Obtener préstamos de un libro específico
   getLoansByBook(bookId: number): Observable<Loan[]> {
     return this.http.get<Loan[]>(`${this.baseUrl}/loans/book/${bookId}`);
   }
