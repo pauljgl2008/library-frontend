@@ -52,11 +52,11 @@ export class AuthorsListPageComponent implements OnInit {
   updateAuthor(item: any) {
     this.authorSerivce.updateAuthor(item.id, item).subscribe({
       next: (response: BookResponseDto) => {
-        console.log('Libro actualizado:', response);
+        console.log('Autor actualizado:', response);
         this.loadAuthors();
       },
       error: (error) => {
-        console.error('Error al actualizar el libro:', error);
+        console.error('Error al actualizar el autor:', error);
       },
     });
   }
@@ -80,7 +80,7 @@ export class AuthorsListPageComponent implements OnInit {
 
   onSaveItem(item: any): void {
     this.authorSerivce.addAuthor(item).subscribe((response) => {
-      console.log('Libro creado:', response);
+      console.log('Autor creado:', response);
       this.loadAuthors();
       this.visible = false;
     });

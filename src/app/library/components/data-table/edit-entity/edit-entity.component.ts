@@ -116,10 +116,14 @@ export class EditEntityComponent {
     }
   }
 
-  private processAuthorField(): void {
+  private processAuthorOrBookField(): void {
     const author = this.entityForm.value['author_id'];
     if (author) {
       this.entityForm.value['author_id'] = Number(author); // Ensure the author ID is processed correctly
+    }
+    const book = this.entityForm.value['book_id'];
+    if (book) {
+      this.entityForm.value['book_id'] = Number(book); // Ensure the author ID is processed correctly
     }
   }
 
@@ -166,7 +170,7 @@ export class EditEntityComponent {
   submit(): void {
     if (this.validateForm()) {
       this.isSaving = true;
-      this.processAuthorField(); // Process author field before saving
+      this.processAuthorOrBookField(); // Process author field before saving
       setTimeout(() => {
         let x = this.entityForm.value;
         x['id'] = this.entity['id'];

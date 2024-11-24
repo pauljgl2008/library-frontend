@@ -97,11 +97,11 @@ export class DashboardPageComponent implements OnInit {
   updateBook(item: any) {
     this.bookService.updateBook(item.id, item).subscribe({
       next: (response: BookResponseDto) => {
-        console.log('Libro actualizado:', response);
+        console.log('Dashboard actualizado:', response);
         this.loadBooks();
       },
       error: (error) => {
-        console.error('Error al actualizar el libro:', error);
+        console.error('Error al actualizar el dashboard:', error);
       }
     });
   }
@@ -125,7 +125,7 @@ export class DashboardPageComponent implements OnInit {
 
   onSaveItem(item: any): void {
     this.bookService.addBook(item).subscribe((response) => {
-      console.log('Libro creado:', response);
+      console.log('Dashboard creado:', response);
       this.loadBooks();
       this.visible = false;
     });

@@ -50,9 +50,7 @@ export class LoansListPageComponent implements OnInit {
   loadData(): void {
     this.bookService.getAllBooks().subscribe((response: any) => {
       this.books = response;
-      console.log('boooks');
       this.loanService.getLoans().subscribe((response: any) => {
-        console.log('loaaaanss');
         this.loans = response;
       });
     });
