@@ -5,10 +5,9 @@ import { BookResponseDto } from '../../model/book-response-dto';
 
 @Component({
   selector: 'app-authors-list-page',
-  templateUrl: './authors-list-page.component.html'
+  templateUrl: './authors-list-page.component.html',
 })
 export class AuthorsListPageComponent implements OnInit {
-
   books: any;
   pageIndex: number = 0;
   pageSize: number = 5;
@@ -31,20 +30,19 @@ export class AuthorsListPageComponent implements OnInit {
   newBook: any = {
     name: null,
     nationality: null,
-    birth_date: null
+    birth_date: null,
   };
 
-  constructor(private readonly authorSerivce: AuthorService) { }
+  constructor(private readonly authorSerivce: AuthorService) {}
 
   ngOnInit(): void {
     this.loadAuthors();
   }
 
   loadAuthors(): void {
-    this.authorSerivce.getAuthors()
-      .subscribe((response: any) => {
-        this.authors = response
-      });
+    this.authorSerivce.getAuthors().subscribe((response: any) => {
+      this.authors = response;
+    });
   }
 
   onEdit(item: any): void {
@@ -59,7 +57,7 @@ export class AuthorsListPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al actualizar el libro:', error);
-      }
+      },
     });
   }
 
@@ -75,7 +73,7 @@ export class AuthorsListPageComponent implements OnInit {
       author: null,
       isbn: null,
       publication_date: null,
-      status: 'Disponible'
+      status: 'Disponible',
     };
     this.visible = true;
   }

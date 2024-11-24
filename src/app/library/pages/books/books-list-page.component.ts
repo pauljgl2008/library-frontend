@@ -7,10 +7,9 @@ import { BookResponseDto } from '../../model/book-response-dto';
 
 @Component({
   selector: 'app-books-list-page',
-  templateUrl: './books-list-page.component.html'
+  templateUrl: './books-list-page.component.html',
 })
 export class BooksListPageComponent implements OnInit {
-
   books: any;
   pageIndex: number = 0;
   pageSize: number = 5;
@@ -31,7 +30,7 @@ export class BooksListPageComponent implements OnInit {
     { field: 'author_id', label: 'Autor', type: 'select' },
     { field: 'isbn', label: 'ISBN', type: 'text' },
     { field: 'status', label: 'Estado', type: 'select' },
-    { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' }
+    { field: 'publication_date', label: 'Fecha de Publicación', type: 'date' },
   ];
   authors: any[] = [];
   newBook: any = {
@@ -39,10 +38,13 @@ export class BooksListPageComponent implements OnInit {
     author: null,
     isbn: null,
     publication_date: null,
-    status: 'Disponible'
+    status: 'Disponible',
   };
 
-  constructor(private readonly bookService: BookService, private readonly authorSerivce: AuthorService) { }
+  constructor(
+    private readonly bookService: BookService,
+    private readonly authorSerivce: AuthorService
+  ) {}
 
   ngOnInit(): void {
     this.loadBooks();
@@ -50,14 +52,14 @@ export class BooksListPageComponent implements OnInit {
   }
 
   loadAuthors(): void {
-    this.authorSerivce.getAuthors()
-      .subscribe((response: any) => {
-        this.authors = response
-      });
+    this.authorSerivce.getAuthors().subscribe((response: any) => {
+      this.authors = response;
+    });
   }
 
   loadBooks(): void {
-    this.bookService.getPaginatedBooks(this.pageIndex, this.pageSize)
+    this.bookService
+      .getPaginatedBooks(this.pageIndex, this.pageSize)
       .subscribe((books: PaginatedBooksResponse) => {
         this.books = books.content;
         this.pageIndex = books.pageable.pageNumber;
@@ -102,7 +104,7 @@ export class BooksListPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al actualizar el libro:', error);
-      }
+      },
     });
   }
 
@@ -118,7 +120,7 @@ export class BooksListPageComponent implements OnInit {
       author: null,
       isbn: null,
       publication_date: null,
-      status: 'Disponible'
+      status: 'Disponible',
     };
     this.visible = true;
   }

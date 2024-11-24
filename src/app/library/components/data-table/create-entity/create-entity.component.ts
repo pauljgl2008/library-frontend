@@ -24,7 +24,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() visible = false;
 
   @Input() entity: { [key: string]: any } = {};
-  @Input() entityType: string ="";
+  @Input() entityType: string = '';
   @Input() entityFields: EntityField[] = [];
   @Input() authorOptions: { id: number; name: string }[] = [];
 
@@ -50,7 +50,6 @@ export class CreateEntityComponent implements OnInit, OnChanges {
     if (changes['entityFields'] && !changes['entityFields'].firstChange) {
       this.buildForm();
     }
-
     if (changes['entity'] && !changes['entity'].firstChange) {
       this.resetForm();
       this.updateDateFields();
@@ -59,23 +58,19 @@ export class CreateEntityComponent implements OnInit, OnChanges {
 
   private buildForm(): void {
     const formGroup: { [key: string]: any } = {};
-
     this.entityFields.forEach((field) => {
       const fieldValidators = [
         Validators.required,
         this.notEmptyValidator,
         ...this.getFieldValidators(field),
       ];
-
       if (field.field === 'isbn') {
         fieldValidators.push(Validators.maxLength(14));
       }
-
       let defaultValue = this.entity[field.field] || null;
       if (field.type === 'date' && !defaultValue) {
         defaultValue = new Date().toISOString().split('T')[0];
       }
-
       formGroup[field.field] = [defaultValue, fieldValidators];
     });
 

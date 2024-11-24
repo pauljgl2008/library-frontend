@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { EntityField } from '../../../model/entityField';
 
 @Component({
@@ -16,7 +28,7 @@ export class EditEntityComponent {
   @Input() cancelLabel: string = 'Cancelar';
   @Input() authorOptions: { id: number; name: string }[] = [];
   @Input() bookOptions: { id: number; title: string }[] = [];
-  @Input() entityType: string="";
+  @Input() entityType: string = '';
 
   @Output() editItem = new EventEmitter<{ [key: string]: any }>();
 
@@ -52,11 +64,9 @@ export class EditEntityComponent {
 
   private createFormGroup(): { [key: string]: any } {
     const formGroup: { [key: string]: any } = {};
-
     this.entityFields.forEach((field) => {
       formGroup[field.field] = this.createFormControl(field);
     });
-
     return formGroup;
   }
 
@@ -89,7 +99,10 @@ export class EditEntityComponent {
     return validators;
   }
 
-  private addFieldSpecificValidators(field: EntityField, validators: Validators[]): void {
+  private addFieldSpecificValidators(
+    field: EntityField,
+    validators: Validators[]
+  ): void {
     switch (field.type) {
       case 'date':
         validators.push(Validators.pattern(/\d{4}-\d{2}-\d{2}/)); // Validate date format
@@ -119,7 +132,9 @@ export class EditEntityComponent {
   }
 
   private notEmptyValidator(control: AbstractControl): ValidationErrors | null {
-    return control.value === null || control.value === '' ? { notEmpty: true } : null;
+    return control.value === null || control.value === ''
+      ? { notEmpty: true }
+      : null;
   }
 
   cancel(): void {
@@ -154,7 +169,7 @@ export class EditEntityComponent {
       this.processAuthorField(); // Process author field before saving
       setTimeout(() => {
         let x = this.entityForm.value;
-        x["id"]=this.entity["id"]
+        x['id'] = this.entity['id'];
         this.editItem.emit(this.entityForm.value);
         this.confirmEdition.emit(true);
         this.isSaving = false;
