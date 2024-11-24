@@ -102,10 +102,9 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.updatePaginationAndFilter();
   }
 
-  onFilterChange(): void {
-    this.pageIndex = 0;
-    this.filterChange.emit(this.filterText);
-    this.updatePaginationAndFilter();
+  onDetail(item: any): void {
+    this.itemToEdit = item;
+    this.displayEditModal = true;
   }
 
   onEdit(item: any): void {

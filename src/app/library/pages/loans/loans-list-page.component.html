@@ -10,6 +10,6 @@
 <!-- DataTable -->
 <app-data-table [entityType]="'loan'" [bookOptions]="books" [data]="loans" [columns]="columns" [pageIndex]="pageIndex"
   [pageSize]="pageSize" [totalPages]="totalPages" [filterText]="filterText" (pageChange)="onPageChange($event)"
-  (pageSizeChange)="onPageSizeChange($event)" (filterChange)="onFilterChange($event)" [entityFields]="entityFields"
+  (pageSizeChange)="onPageSizeChange($event)" [entityFields]="entityFields"
   (edit)="onEdit($event)" (delete)="onDelete($event)">
 </app-data-table>

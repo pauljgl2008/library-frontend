@@ -87,11 +87,6 @@ export class BooksListPageComponent implements OnInit {
     this.loadBooks();
   }
 
-  onFilterChange(filter: string): void {
-    this.filterText = filter;
-    this.loadBooks();
-  }
-
   onEdit(item: any): void {
     this.updateBook(item);
   }

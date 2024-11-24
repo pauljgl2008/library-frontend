@@ -66,11 +66,6 @@ export class LoansListPageComponent implements OnInit {
     this.loadData();
   }
 
-  onFilterChange(filter: string): void {
-    this.filterText = filter;
-    this.loadData();
-  }
-
   onEdit(item: any): void {
     this.updateBook(item);
   }

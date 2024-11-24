@@ -30,7 +30,8 @@ import { DashboardPageComponent } from './pages/dashboard/dashboard-page.compone
     AuthorsListPageComponent,
     LoansListPageComponent,
     DashboardPageComponent,
-    DataTableComponent
+    DataTableComponent,
+
   ],
   imports: [
     CommonModule,

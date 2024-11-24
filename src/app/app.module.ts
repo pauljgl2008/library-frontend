@@ -7,11 +7,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { ToastModule } from 'primeng/toast';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,12 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    SharedModule,
-    DialogModule,
-    ButtonModule,
-    ToastModule,
-    FormsModule
-
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
