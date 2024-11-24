@@ -20,9 +20,13 @@
         <!-- Dropdown para el campo 'author' o 'status' -->
         <ng-template #selectField>
           <select id="{{ field.field }}" formControlName="{{ field.field }}" class="form-control mb-3">
-            <ng-container *ngIf="field.field === 'status'">
+            <ng-container *ngIf="field.field === 'status' && entityType==='book'">
               <option value="Disponible">Disponible</option>
               <option value="No disponible">No disponible</option>
+            </ng-container>
+            <ng-container *ngIf="field.field === 'status' && entityType==='loan'">
+              <option value="Activo">Activo</option>
+              <option value="Finalizado">Finalizado</option>
             </ng-container>
 
             <ng-container *ngIf="field.field === 'author_id'">

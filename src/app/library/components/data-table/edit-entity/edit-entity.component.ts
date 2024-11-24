@@ -16,6 +16,7 @@ export class EditEntityComponent {
   @Input() cancelLabel: string = 'Cancelar';
   @Input() authorOptions: { id: number; name: string }[] = [];
   @Input() bookOptions: { id: number; title: string }[] = [];
+  @Input() entityType: string="";
 
   @Output() editItem = new EventEmitter<{ [key: string]: any }>();
 

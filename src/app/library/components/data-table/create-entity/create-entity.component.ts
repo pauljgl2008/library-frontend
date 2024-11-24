@@ -24,6 +24,7 @@ export class CreateEntityComponent implements OnInit, OnChanges {
   @Input() visible = false;
 
   @Input() entity: { [key: string]: any } = {};
+  @Input() entityType: string ="";
   @Input() entityFields: EntityField[] = [];
   @Input() authorOptions: { id: number; name: string }[] = [];
 

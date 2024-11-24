@@ -23,6 +23,7 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() entityFields: EntityField[] = [];
   @Input() authorOptions: { id: number; name: string }[] = [];
   @Input() bookOptions: { id: number; title: string }[] = [];
+  @Input() entityType: string ="";
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();

@@ -3,11 +3,11 @@
 </div>
 
 <!-- Modal de Creación de Libro -->
-<app-create-entity [(visible)]="visible" [entityFields]="entityFields" [entity]="newBook" [authorOptions]="authors" (saveItem)="onSaveItem($event)" (cancel)="onCancelCreate()">
+<app-create-entity [entityType]="'author'" [(visible)]="visible" [entityFields]="entityFields" [entity]="newBook" [authorOptions]="authors" (saveItem)="onSaveItem($event)" (cancel)="onCancelCreate()">
 </app-create-entity>
 
 <!-- DataTable -->
-<app-data-table
+<app-data-table [entityType]="'author'"
 [data]="authors" [columns]="columns" [pageIndex]="pageIndex" [pageSize]="pageSize"
   [totalPages]="totalPages" [filterText]="filterText"
   [entityFields]="entityFields"
