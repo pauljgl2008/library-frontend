@@ -1,6 +1,7 @@
 import { Input, Output, EventEmitter, SimpleChanges, Component } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { EntityField } from "src/app/library/model/entityField";
+import { LoanService } from "src/app/library/services/loan.service";
 
 @Component({
   selector: 'app-detail-entity',
@@ -23,8 +24,9 @@ export class DetailEntityComponent {
   entityForm: FormGroup;
   entity: { [key: string]: any } = {};
   isSaving: boolean = false;
+  loansByBook: any = [];
 
-  constructor(private readonly fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder, private readonly loanService: LoanService) {
     this.entityForm = this.fb.group({});
   }
 
@@ -37,10 +39,27 @@ export class DetailEntityComponent {
       this.rebuildForm();
     }
     if (changes['itemToDetail']) {
+      if(this.itemToDetail){
+      this.getLoansByBook(this.itemToDetail.id)
+    }
       this.updateEntityFromItem(this.itemToDetail);
       this.rebuildForm();
     }
   }
+
+  getLoansByBook(bookId: number): void {
+    this.loanService.getLoansByBook(bookId).subscribe({
+      next: (loansByBook) => {
+        console.log("loansByBookId")
+        console.log(loansByBook)
+        this.loansByBook = loansByBook;
+      },
+      error: (err) => {
+        console.error('Error al obtener los préstamos', err);
+      }
+    });
+  }
+
   private updateEntityFromItem(item: any): void {
     this.entity = { ...item };
   }
