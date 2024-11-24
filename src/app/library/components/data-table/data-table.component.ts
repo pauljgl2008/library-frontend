@@ -30,13 +30,16 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Output() filterChange = new EventEmitter<string>();
 
   @Output() create = new EventEmitter<any>();
+  @Output() detail = new EventEmitter<any>();
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
 
   paginatedData: any[] = [];
   displayEditModal: boolean = false;
+  displayDetailModal: boolean = false;
   displayDeleteModal: boolean = false;
   itemToEdit: any = null;
+  itemToDetail: any = null;
   itemToDelete: any = null;
   visible: boolean = false;
   newItem: any = {};
@@ -103,8 +106,8 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   onDetail(item: any): void {
-    this.itemToEdit = item;
-    this.displayEditModal = true;
+    this.itemToDetail = item;
+    this.displayDetailModal = true;
   }
 
   onEdit(item: any): void {
@@ -140,11 +143,21 @@ export class DataTableComponent implements OnInit, OnChanges {
   onEditItem(event: any): void {
     this.itemToEdit = event;
   }
+  onDetailItem(event: any): void {
+    this.itemToDetail = event;
+  }
 
   onConfirmEdition(isConfirmed: boolean): void {
     if (isConfirmed && this.itemToEdit) {
       this.edit.emit(this.itemToEdit);
     }
     this.displayEditModal = false;
+  }
+
+  onConfirmDetail(isConfirmed: boolean): void {
+    if (isConfirmed && this.itemToDetail) {
+      this.detail.emit(this.itemToDetail);
+    }
+    this.displayDetailModal = false;
   }
 }

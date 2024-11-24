@@ -11,7 +11,7 @@
             formControlName="{{ field.field }}"
             [type]="field.type"
             class="form-control mb-3"
-            [placeholder]="'Ingresa ' + field.label"
+            [placeholder]="field.label"
             [attr.maxlength]="field.field === 'isbn' ? 14 : null"
             [attr.aria-describedby]="field.field + '-error'"
           />

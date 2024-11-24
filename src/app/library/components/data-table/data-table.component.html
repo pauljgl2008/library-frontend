@@ -64,11 +64,16 @@
   </div>
 </div>
 
-<!-- Modal de Confirmación de Eliminación -->
-<app-delete-entity [visible]="displayDeleteModal" [itemToDelete]="itemToDelete"
-  (confirmDeletion)="onConfirmDeletion($event)"></app-delete-entity>
+<!-- Modal de Confirmación de Detalle -->
+<app-detail-entity [entityType]="entityType" [authorOptions]="authorOptions" [bookOptions]="bookOptions"
+  [visible]="displayDetailModal" [entityFields]="entityFields" [itemToDetail]="itemToDetail" (detailItem)="onDetailItem($event)"
+  (confirmDetail)="onConfirmDetail($event)"></app-detail-entity>
 
 <!-- Modal de Confirmación de Eliminación -->
 <app-edit-entity [entityType]="entityType" [authorOptions]="authorOptions" [bookOptions]="bookOptions"
   [visible]="displayEditModal" [entityFields]="entityFields" [itemToEdit]="itemToEdit" (editItem)="onEditItem($event)"
   (confirmEdition)="onConfirmEdition($event)"></app-edit-entity>
+
+<!-- Modal de Confirmación de Eliminación -->
+<app-delete-entity [visible]="displayDeleteModal" [itemToDelete]="itemToDelete"
+  (confirmDeletion)="onConfirmDeletion($event)"></app-delete-entity>

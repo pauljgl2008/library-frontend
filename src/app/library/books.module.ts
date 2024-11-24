@@ -19,10 +19,12 @@ import { CreateEntityComponent } from './components/data-table/create-entity/cre
 import { EditEntityComponent } from './components/data-table/edit-entity/edit-entity.component';
 import { LoansListPageComponent } from './pages/loans/loans-list-page.component';
 import { DashboardPageComponent } from './pages/dashboard/dashboard-page.component';
+import { DetailEntityComponent } from './components/data-table/detail-entity/detail-entity.component';
 
 @NgModule({
   declarations: [
     CreateEntityComponent,
+    DetailEntityComponent,
     EditEntityComponent,
     DeleteEntityComponent,
     LayoutPageComponent,
@@ -30,8 +32,7 @@ import { DashboardPageComponent } from './pages/dashboard/dashboard-page.compone
     AuthorsListPageComponent,
     LoansListPageComponent,
     DashboardPageComponent,
-    DataTableComponent,
-
+    DataTableComponent
   ],
   imports: [
     CommonModule,

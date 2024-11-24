@@ -1,0 +1,67 @@
+<p-dialog [header]="formTitle" [(visible)]="visible" [modal]="true" [closable]="false" [style]="{ width: '400px' }">
+  <form [formGroup]="entityForm">
+    <div *ngFor="let field of entityFields">
+      <label for="{{ field.field }}">{{ field.label }}</label>
+
+      <!-- Condición para mostrar un input o un select -->
+      <ng-container *ngIf="field.type !== 'select'; else selectField">
+        <input
+          id="{{ field.field }}"
+          formControlName="{{ field.field }}"
+          [type]="field.type"
+          class="form-control mb-3"
+          [placeholder]="'Ingresa ' + field.label"
+          [attr.maxlength]="field.field === 'isbn' ? 14 : null"
+          [attr.aria-describedby]="field.field + '-error'"
+          [readonly]="isReadonly" /> <!-- Campo solo lectura -->
+      </ng-container>
+
+      <!-- Dropdown para el campo 'author' o 'status' -->
+      <ng-template #selectField>
+        <select
+          id="{{ field.field }}"
+          formControlName="{{ field.field }}"
+          class="form-control mb-3"> <!-- Campo solo lectura -->
+          <ng-container *ngIf="field.field === 'status' && entityType==='book'">
+            <option value="Disponible">Disponible</option>
+            <option value="No disponible">No disponible</option>
+          </ng-container>
+          <ng-container *ngIf="field.field === 'status' && entityType==='loan'">
+            <option value="Activo">Activo</option>
+            <option value="Finalizado">Finalizado</option>
+          </ng-container>
+          <ng-container *ngIf="field.field === 'author_id'">
+            <option *ngFor="let option of authorOptions" [value]="option.id">
+              {{ option.name }}
+            </option>
+          </ng-container>
+          <ng-container *ngIf="field.field === 'book_id'">
+            <option *ngFor="let option of bookOptions" [value]="option.id">
+              {{ option.title }}
+            </option>
+          </ng-container>
+        </select>
+      </ng-template>
+
+      <!-- Mensajes de error -->
+      <div *ngIf="entityForm.get(field.field)?.touched && entityForm.get(field.field)?.invalid">
+        <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('required')">
+          Este campo es obligatorio.
+        </small>
+        <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('pattern')">
+          Formato no válido.
+        </small>
+        <small class="text-danger" *ngIf="entityForm.get(field.field)?.hasError('maxlength')">
+          El campo no puede tener más de 14 caracteres.
+        </small>
+      </div>
+    </div>
+
+    <p-footer>
+      <div class="d-flex justify-content-center align-items-center w-100">
+        <!-- Solo permitir cancelar (sin acción de enviar) -->
+        <p-button severity="danger" [label]="cancelLabel" type="button" (onClick)="cancel()" icon="pi pi-times" />
+      </div>
+    </p-footer>
+  </form>
+</p-dialog>
