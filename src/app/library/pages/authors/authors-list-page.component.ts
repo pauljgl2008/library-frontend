@@ -69,9 +69,6 @@ export class AuthorsListPageComponent implements OnInit {
   }
 
   onDelete(item: any): void {
-    this.authorSerivce.deleteAuthor(item.id).subscribe(() => {
-      this.loadAuthors();
-    });
     this.authorSerivce
       .deleteAuthor(item.id)
       .pipe(
@@ -81,12 +78,10 @@ export class AuthorsListPageComponent implements OnInit {
           return of(null);
         })
       )
-      .subscribe((response) => {
-        if (response) {
-          console.log('Libro creado:', response);
+      .subscribe(() => {
+          console.log('Libro eliminado:');
           this.loadAuthors();
           this.visible = false;
-        }
       });
   }
 
@@ -115,7 +110,6 @@ export class AuthorsListPageComponent implements OnInit {
 
   showErrorModal(error: any): void {
     if (error?.error) {
-      console.log('sii');
       this.errorMessage = error.error;
     } else {
       this.errorMessage = 'Ocurrió un error desconocido al guardar el libro.';
