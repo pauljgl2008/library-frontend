@@ -79,7 +79,7 @@ export class AuthorsListPageComponent implements OnInit {
         })
       )
       .subscribe(() => {
-          console.log('Libro eliminado:');
+          console.log('Author eliminado:');
           this.loadAuthors();
           this.visible = false;
       });
